@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.master.app.weight.WarrScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/button_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_title"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/sc_wake_lock"
+                style="@style/text_item_style"
+                android:text="屏幕常亮"
+                android:textStyle="normal" />
+
+            <View style="@style/line_style"></View>
+
+            <android.support.v7.widget.SwitchCompat
+                style="@style/text_item_style"
+                android:text="仅在wifi下上传/下载"
+                android:textStyle="normal" />
+
+            <View style="@style/line_style"></View>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/slate"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:elevation="@dimen/elevation_3dp"
+                android:text="GPS状态查看" />
+
+            <View style="@style/line_style"></View>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_collect"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:elevation="@dimen/elevation_3dp"
+                android:text="采集设置" />
+
+            <View style="@style/line_style"></View>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/atv_advice"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:elevation="@dimen/elevation_3dp"
+                android:text="用户反馈" />
+
+            <View style="@style/line_style"></View>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/atv_account"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:elevation="@dimen/elevation_3dp"
+                android:text="用户信息" />
+
+            <View style="@style/line_style"></View>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/atv_about"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:elevation="@dimen/elevation_3dp"
+                android:text="关于软件" />
+
+            <View style="@style/line_style"></View>
+
+        </LinearLayout>
+    </LinearLayout>
+</com.master.app.weight.WarrScrollView>

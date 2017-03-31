@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/button_gray"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_att"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.master.app.weight.CustomTextView
+                    android:id="@+id/ct_roadAttr"
+                    style="@style/text_color_style"
+                    android:layout_width="130dp"
+                    android:layout_height="37dp"
+                    android:gravity="center"
+                    android:text="路网地图属性"
+                    android:textSize="14sp"
+                    app:textLeftBottomRadius="8dp"
+                    app:textLeftTopRadius="8dp"
+                    app:textSolidColor="@color/white"
+                    app:textStrokeColor="@color/light_dark"
+                    app:textStrokeWidth="1dp" />
+
+                <com.master.app.weight.CustomTextView
+                    android:id="@+id/ct_workAttr"
+                    style="@style/text_color_style"
+                    android:layout_width="130dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="-1dp"
+                    android:gravity="center"
+                    android:text="工作地图属性"
+                    android:textSize="14sp"
+                    app:textRightBottomRadius="8dp"
+                    app:textRightTopRadius="8dp"
+                    app:textSolidColor="@color/white"
+                    app:textStrokeColor="@color/light_dark"
+                    app:textStrokeWidth="1dp" />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.master.app.weight.SearchListView
+            android:id="@+id/listview_gl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/stand_backgroud"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:drawSelectorOnTop="true"
+            android:listSelector="@android:color/transparent" />
+
+        <com.master.app.weight.SearchListView
+            android:id="@+id/listview_work"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/stand_backgroud"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:drawSelectorOnTop="true"
+            android:listSelector="@android:color/transparent"
+            android:visibility="invisible" />
+    </RelativeLayout>
+</LinearLayout>

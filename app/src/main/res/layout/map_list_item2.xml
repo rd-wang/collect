@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="58dp"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="选择"
+            style="@style/Widget.AppCompat.Button"
+            android:background="@color/darkBlue"
+            />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:background="@color/red"
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="删除"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/tv_id"
+                    style="@style/text_color_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="id"
+                    />
+
+                <com.master.app.weight.LabelView
+                    android:id="@+id/lable"
+                    android:visibility="gone"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:lv_background_color="#FF6666"
+                    app:lv_gravity="TOP_LEFT"
+                    app:lv_text="当前使用"
+                    app:lv_text_size="8dp"
+                    app:lv_fill_size="3"
+                    />
+            </FrameLayout>
+
+            <View
+                style="@style/line_style"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                ></View>
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/text_color_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="某某地图1"
+                />
+
+            <View
+                style="@style/line_style"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                ></View>
+
+            <TextView
+                android:id="@+id/tv_date"
+                style="@style/text_color_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2016-10-18"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.daimajia.swipe.SwipeLayout>

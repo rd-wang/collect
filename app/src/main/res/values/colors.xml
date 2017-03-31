@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="darkBlue">#880000FF</color>
+    <color name="gay">#cccccc</color>
+    <color name="gay_bg">#f2f2f2</color>
+    <color name="white">#fff</color>
+    <color name="deep">#272636</color>
+    <color name="light">#949494</color>
+    <color name="blue">#58BBD8</color>
+    <color name="black">#000</color>
+    <color name="light_dark">#5c5c5c</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="red">#E43F3E</color>
+    <color name="home_bar_text_normal">#6a6c6f</color>
+    <color name="home_bar_text_push">#ff5959</color>
+    <color name="textnormal">#adadad</color>
+    <color name="btn_bg_pressed_color">#ffacac</color>
+    <color name="btn_bg_color">#ff5959</color>
+    <color name="button_gray">#F7F7F7</color>
+    <color name="yellow">#ff0</color>
+    <color name="green">#0f0</color>
+    <color name="text_color">#333333</color>
+    <color name="search_shadow_layout">#50000000</color>
+
+    <!-- Light Theme -->
+    <color name="search_light_background">#fffafafa</color>
+    <color name="search_light_background2">@android:color/transparent</color>
+    <color name="search_light_icon">#8a000000</color>
+    <color name="search_light_text">#de000000</color>
+    <color name="search_light_hint">#80000000</color>
+    <color name="search_light_text_highlight">#62000000</color>
+
+    <!-- Dark Theme -->
+    <color name="search_dark_background">#ff303030</color>
+    <color name="search_dark_icon">#f9ffffff</color>
+    <color name="search_dark_text">#ffffffff</color>
+    <color name="search_dark_hint">#80ffffff</color>
+    <color name="search_dark_text_highlight">#62ffffff</color>
+
+
+
+    <!-- 标准背景色 -->
+    <color name="stand_backgroud">#F4F4F4</color>
+    <color name="gray">#E5E5E5</color>
+    <color name="light_gray">#B3B3B3</color>
+    <color name="time_gray">#808080</color>
+    <color name="secondary_text">#727272</color>
+
+
+
+    <color name="round_color">#F4F4F4</color>
+</resources>

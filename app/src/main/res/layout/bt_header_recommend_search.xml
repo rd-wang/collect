@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/gray"
+
+    >
+
+    <LinearLayout
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/recommend_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_search_black_line"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:contentDescription=" "
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/selector_drawer_search"
+            />
+
+        <EditText
+
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:id="@+id/drawer_search"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="输入编码进行搜索"
+            style="@style/Material.Widget.EditText"
+            android:textColorHint="@color/time_gray"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            />
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/search_clear"
+            android:contentDescription=" "
+            android:paddingStart="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingEnd="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_edit_input_clear"
+            />
+    </LinearLayout>
+
+</LinearLayout>

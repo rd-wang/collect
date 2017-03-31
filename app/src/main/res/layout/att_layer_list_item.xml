@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        style="@style/line_style"></View>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="1dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvlayername"
+            style="@style/text_item_style"
+            android:drawablePadding="@dimen/activity_horizontal_margin"
+            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+            android:elevation="@dimen/elevation_3dp" />
+    </LinearLayout>
+
+</LinearLayout>

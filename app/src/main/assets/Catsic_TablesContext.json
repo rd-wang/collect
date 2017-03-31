@@ -1,0 +1,155 @@
+{
+  "content": [
+    {
+      "tName": "T_xz",
+      "fields": [
+        {
+          "fName": "XZBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "XZMC",
+          "fOrder": "2"
+        },
+        {
+          "fName": "CSSX",
+          "fOrder": "3"
+        }
+      ]
+    },
+    {
+      "tName": "T_jzc",
+      "fields": [
+        {
+          "fName": "JZCBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "JZCMC",
+          "fOrder": "2"
+        }
+      ]
+    },
+    {
+      "tName": "T_cbjzc",
+      "fields": [
+        {
+          "fName": "CBJZCBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "CBJZCMC",
+          "fOrder": "2"
+        },
+        {
+          "fName": "CBJZCRK",
+          "fOrder": "3"
+        }
+      ]
+    },
+    {
+      "tName": "T_ql",
+      "fields": [
+        {
+          "fName": "QLBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "QLMC",
+          "fOrder": "2"
+        },
+        {
+          "fName": "LXBM",
+          "fOrder": "3"
+        },
+        {
+          "fName": "LXMC",
+          "fOrder": "4"
+        },
+        {
+          "fName": "LDXLH",
+          "fOrder": "5"
+        }
+      ]
+    },
+    {
+      "tName": "T_sd",
+      "fields": [
+        {
+          "fName": "SDBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "SDMC",
+          "fOrder": "2"
+        },
+        {
+          "fName": "LXBM",
+          "fOrder": "3"
+        },
+        {
+          "fName": "LXMC",
+          "fOrder": "4"
+        },
+        {
+          "fName": "LDXLH",
+          "fOrder": "5"
+        }
+      ]
+    },
+    {
+      "tName": "T_dk",
+      "fields": [
+        {
+          "fName": "DKBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "DKMC",
+          "fOrder": "2"
+        },
+        {
+          "fName": "LXBM",
+          "fOrder": "3"
+        },
+        {
+          "fName": "LXMC",
+          "fOrder": "4"
+        },
+        {
+          "fName": "LDXLH",
+          "fOrder": "5"
+        }
+      ]
+    },
+    {
+      "tName": "T_ld",
+      "fields": [
+        {
+          "fName": "LDBM",
+          "fOrder": "1"
+        },
+        {
+          "fName": "LDMC",
+          "fOrder": "2"
+        },
+        {
+          "fName": "LDXLH",
+          "fOrder": "3"
+        },
+        {
+          "fName":"QDJWDID",
+          "fOrder":"4"
+        },
+        {
+          "fName":"ZDJWDID",
+          "fOrder":"5"
+        },
+        {
+          "fName":"SSLX",
+          "fOrder":"6"
+        }
+      ]
+    }
+  ]
+}

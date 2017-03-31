@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <com.esri.android.map.MapView
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/recommend_search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_search_black_line"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
+            <Spinner
+                android:id="@+id/search_menu"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/m_point_label"/>
+
+            <EditText
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:id="@+id/search_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="输入编码进行搜索"
+                style="@style/Material.Widget.EditText"
+                android:textColorHint="@color/time_gray"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:maxLines="1"
+                />
+            <ImageView
+                android:id="@+id/search_btn"
+                android:contentDescription=" "
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/selector_drawer_search"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/search_result_layout"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#66222222">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="22dp"
+        android:layout_marginBottom="78dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/image_tuceng"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tuceng_selecter"
+            />
+
+        <ImageView
+            android:layout_marginTop="12dp"
+            android:id="@+id/image_identify"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/diantu_selecter"
+            />
+
+        <ImageView
+            android:layout_marginTop="12dp"
+            android:id="@+id/image_measure"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/celiang_selecter"
+            />
+
+        <ImageView
+            android:layout_marginTop="12dp"
+            android:id="@+id/image_zoomcenter"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/dingwei_selecter"
+            />
+
+    </LinearLayout>
+</FrameLayout>
+
+
+

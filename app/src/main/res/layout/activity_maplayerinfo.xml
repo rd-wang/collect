@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.master.ui.activity.map.MrLayerActivity"
+        >
+
+        <include layout="@layout/toolbar_title" />
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:background="@color/blue"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="3.5"-->
+        <!--android:gravity="center"-->
+        <!--android:text="当前地图比例尺："-->
+        <!--android:textColor="#333333" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tvscalename"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="3.5"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="#333333" />-->
+        <!--</LinearLayout>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/gay_bg"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="是否显示"
+                android:textColor="#333333"
+                />
+
+            <View
+                style="@style/line_style"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                />
+
+            <TextView
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="显示比例尺"
+                android:textColor="#333333"
+                />
+
+            <View
+                style="@style/line_style"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                />
+            <TextView
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="显示比例尺"
+                android:textColor="#333333"
+                />
+        </LinearLayout>
+
+        <View style="@style/line_style"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@color/stand_backgroud"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:drawSelectorOnTop="true"
+                android:listSelector="@android:color/transparent"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
+

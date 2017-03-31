@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.master.app.weight.APSTSViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                />
+
+            <RelativeLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                >
+
+                <com.master.app.weight.AdvancedPagerSlidingTabStrip
+                    android:id="@+id/tabs"
+                    style="@style/weibo_icon_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="false"
+                    />
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:id="@+id/iv_Btn"
+                    android:drawableTop="@mipmap/collect"
+                    android:textAppearance="@style/CustomTabPageIndicator.Text"
+                    android:textSize="11sp"
+                    android:text="采集"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp"
+                    android:paddingTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#adadad"
+                    tools:ignore="SmallSp"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/lgd_airpanel"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:behavior_hideable="true"
+            android:background="@drawable/shape1"
+            style="@style/text_color_style"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/lx_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="15sp"
+                    />
+
+                <android.support.v7.widget.GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="185dp"
+                    android:background="@drawable/shape"
+                    app:columnCount="3"
+                    app:rowCount="2"
+                    >
+
+                    <com.rey.material.widget.Button
+                        android:padding="6dp"
+                        android:drawableTop="@drawable/fenduan"
+                        style="@style/text_color_style"
+                        android:id="@+id/tv_lxfd"
+                        android:layout_width="0dp"
+                        android:layout_height="92.5dp"
+                        android:layout_margin="1px"
+                        android:gravity="center"
+                        android:background="@drawable/shape"
+                        android:text="路线分段"
+                        app:layout_columnWeight="1"
+                        />
+
+                    <com.rey.material.widget.Button
+                        android:padding="6dp"
+                        android:drawableTop="@drawable/diancaiji"
+                        android:id="@+id/btn_dcj"
+                        style="@style/text_color_style"
+                        android:layout_width="0dp"
+                        android:layout_height="92.5dp"
+                        android:layout_margin="1px"
+                        android:gravity="center"
+                        android:background="@drawable/shape"
+                        android:text="点采集"
+                        app:layout_columnWeight="1"
+                        />
+
+                    <com.rey.material.widget.Button
+                        android:padding="6dp"
+                        android:id="@+id/btn_ztcj"
+                        android:drawableTop="@drawable/zantingcaiji_selecter"
+                        style="@style/text_color_style"
+                        android:background="@drawable/shape"
+                        android:layout_width="0dp"
+                        android:layout_height="92.5dp"
+                        android:layout_margin="1px"
+                        android:gravity="center"
+                        android:enabled="true"
+                        android:text="暂停采集"
+                        app:layout_columnWeight="1"
+                        />
+
+                    <com.rey.material.widget.Button
+                        android:padding="6dp"
+                        android:drawableTop="@drawable/jixucaiji_selecter"
+                        android:id="@+id/btn_jxcj"
+                        style="@style/text_color_style"
+                        android:layout_width="0dp"
+                        android:layout_height="92.5dp"
+                        android:background="@drawable/shape"
+                        android:layout_margin="1px"
+                        android:gravity="center"
+                        android:enabled="false"
+                        android:text="继续采集"
+                        app:layout_columnWeight="1"
+                        />
+
+                    <com.rey.material.widget.Button
+                        android:padding="6dp"
+                        android:drawableTop="@drawable/tingzhicaiji"
+                        android:id="@+id/btn_tzcj"
+                        style="@style/text_color_style"
+                        android:layout_width="0dp"
+                        android:layout_height="92.5dp"
+                        android:background="@drawable/shape"
+                        android:layout_margin="1px"
+                        android:gravity="center"
+                        android:text="停止采集"
+                        app:layout_columnWeight="1"
+                        />
+
+                </android.support.v7.widget.GridLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/main_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            >
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@color/blue"
+                    android:gravity="center"
+                    android:text="录入"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    ></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <Button
+                        android:id="@+id/save"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="保存"
+                        />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        />
+
+                    <Button
+                        android:id="@+id/reset"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="取消"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

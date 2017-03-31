@@ -1,0 +1,63 @@
+{
+  "content": [
+    {
+      "cName": "TC_ajchnxf",
+      "fields ": [
+        {
+          "xxdm": "1",
+          "xxdmhy": "永久性",
+          "parent": "",
+          "rank": "0",
+          "cOrder": "1"
+        },
+        {
+          "xxdm": "2",
+          "xxdmhy": "半永久性",
+          "parent": "",
+          "rank": "0",
+          "cOrder": "2"
+        },
+        {
+          "xxdm": "3",
+          "xxdmhy": "临时性",
+          "parent": "",
+          "rank": "0",
+          "cOrder": "3"
+        }
+      ]
+    },
+    {
+      "cName": "TC_akjf",
+      "fields": [
+        {
+          "xxdm": "1",
+          "xxdmhy": "特大桥",
+          "parent": "",
+          "rank": "0",
+          "cOrder": "1"
+        },
+        {
+          "xxdm": " 2 ",
+          "xxdmhy": "大桥",
+          "parent": "",
+          "rank": "0",
+          "cOrder": "2"
+        },
+        {
+          "xxdm": " 3 ",
+          "xxdmhy": "中桥",
+          "parent": "  ",
+          "rank": "0",
+          "cOrder": "3"
+        },
+        {
+          "xxdm": "4",
+          "xxdmhy": "小桥",
+          "parent": " ",
+          "rank": "0",
+          "cOrder": "4"
+        }
+      ]
+    }
+  ]
+}

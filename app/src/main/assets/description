@@ -1,0 +1,4 @@
+##catsic_tablecontext.json文件中
+BM属性作为主键，
+
+主键必须放在fields第一个位置

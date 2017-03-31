@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/button_gray"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <include layout="@layout/toolbar_title"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/atv2"
+                style="@style/text_item_style"
+                android:layout_marginTop="@dimen/magin_1dp"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="新建工作地图"
+                />
+
+            <View style="@style/line_style"></View>
+
+            <Button
+                android:id="@+id/atv1"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="管理工作地图"
+                />
+
+            <View style="@style/line_style"></View>
+
+            <Button
+                android:id="@+id/atv3"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="选择区划背景地图"
+                />
+
+            <View style="@style/line_style"></View>
+
+            <Button
+                android:id="@+id/atv4"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="选择路网背景地图"
+                />
+
+            <View style="@style/line_style"></View>
+
+            <Button
+                android:id="@+id/atv5"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="选择在线背景地图"
+                />
+
+            <View style="@style/line_style"></View>
+
+            <Button
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="下载背景地图"
+                />
+
+            <View style="@style/line_style"></View>
+
+            <Button
+                android:id="@+id/act_export"
+                style="@style/text_item_style"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:text="导出工作地图数据"
+                />
+
+            <View style="@style/line_style"></View>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

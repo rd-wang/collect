@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_position" type="id"></item>
+    <item name="id_tab_txt" type="id">888</item>
+
+    <!--————————————————————————————————————————————-->
+    <item name="key" type="id" />
+    <item name="type" type="id" />
+    <item name="childKey" type="id" />
+    <item name="imagePath" type="id" />
+
+    <item name="v_required" type="id" />
+    <item name="error" type="id" />
+
+    <item name="fname" type="id" />
+</resources>

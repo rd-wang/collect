@@ -1,0 +1,50 @@
+{
+  "content": [
+    {
+      "tName": "T_xz",
+      "tNameCHS": "乡镇",
+      "layerType": "13"
+    },
+    {
+      "tName": "T_jzc",
+      "tNameCHS": "建制村",
+      "layerType": "13"
+    },
+    {
+      "tName": "T_cbjzc",
+      "tNameCHS": "撤并村",
+      "layerType": "13"
+    },
+    //  ,
+    //    {
+    //      "tName": "T_cxx",
+    //      "tNameCHS": "村小学",
+    //      "layerType": "13"
+    //    },
+    //    {
+    //      "tName": "T_ZRC",
+    //      "tNameCHS": "自然村",
+    //      "layerType": "13"
+    //    },
+    {
+      "tName": "T_ld",
+      "tNameCHS": "路段",
+      "layerType": "23"
+    },
+    {
+      "tName": "T_ql",
+      "tNameCHS": "桥梁",
+      "layerType": "11"
+    },
+    {
+      "tName": "T_sd",
+      "tNameCHS": "隧道",
+      "layerType": "11"
+    },
+    {
+      "tName": "T_dk",
+      "tNameCHS": "渡口",
+      "layerType": "11"
+    }
+  ]
+}

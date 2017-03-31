@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        >
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            >
+
+            <com.rey.material.widget.CheckBox
+                android:layout_gravity="center"
+                android:id="@+id/chekbox_tuceng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </FrameLayout>
+
+        <View
+
+            style="@style/line_style_bg"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            />
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/tvlayername"
+            style="@style/text_color_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="显示比例尺"
+            android:textSize="14sp"
+            />
+
+        <View
+            style="@style/line_style_bg"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            />
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/tvscale"
+            style="@style/text_color_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="显示比例尺"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
+    <View style="@style/line_style"></View>
+</LinearLayout>

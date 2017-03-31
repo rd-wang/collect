@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingBottom="50dp"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/home_bar_icon_margins">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/warr"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="线采集"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <com.master.app.weight.LableGradView
+            android:id="@+id/fv_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="4"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="18dp"
+            app:datas="@array/m_line_label" />
+        </LinearLayout>
+
+        <View
+            style="@style/line_style"
+            android:layout_marginTop="24dp"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="点采集"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <com.master.app.weight.LableGradView
+            android:layout_marginTop="24dp"
+            android:id="@+id/fv_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
+            android:scrollbars="none"
+            android:verticalSpacing="18dp"
+            app:datas="@array/m_point_label" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="110dp"></View>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

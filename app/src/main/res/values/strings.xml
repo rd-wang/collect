@@ -1,0 +1,148 @@
+<resources>
+    <string name="app_name">公路通</string>
+    <string name="blank">""</string>
+    <string name="organiz">单位名称</string>
+    <string name="basemap_url">http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer</string>
+    <string name="baseimage_url">http://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer</string>
+    <!-- Strings related to login -->
+    <string name="prompt_organiz">请输入单位名称</string>
+    <string name="prompt_captcha">请输入验证码</string>
+    <string name="action_sign_in_short">登陆</string>
+    <string name="titlemsg">已保存到剪切板</string>
+
+    <string-array name="m_line_label">
+        <item>新路线</item>
+        <item>续采集</item>
+        <item>测试1</item>
+        <item>测试2</item>
+    </string-array>
+
+    <string-array name="m_point_label">
+        <item>乡村</item>
+        <item>监制村</item>
+        <item>撤并村</item>
+        <item>自然村</item>
+        <item>桥梁</item>
+        <item>隧道</item>
+        <item>渡口</item>
+        <item>村小学</item>
+    </string-array>
+
+    <string-array name="search_source">
+        <item>工作地图</item>
+        <item>其他地图</item>
+    </string-array>
+
+    <string name="about_dlg_title">FTP Server About</string>
+<string name="about_dlg_message">
+
+    </string>
+    <string name="notif_server_starting">Starting at %s</string>
+    <string name="notif_title">ftp文件管理正在启用</string>
+    <string name="notif_text">地址： %s</string>
+    <string name="notif_stop_text">Stop server</string>
+
+    <string name="nsd_servername_postfix">FTP Server</string>
+
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="feedback">Send feedback</string>
+    <string name="about">About</string>
+
+    <string name="autoconnect_label">Autoconnect settings...</string>
+    <string name="autoconnect_summary">Select the wifi networks on which to autoconnect</string>
+<string name="autoconnect_error_enable_wifi_for_access_points">
+        Enable wifi to get list of access points
+    </string>
+
+    <!-- old strings -->
+    <string name="cant_get_url">Can\'t retrieve url</string>
+    <string name="unknown">unknown</string>
+    <string name="ok">OK</string>
+    <string name="username_validation_error">The password must consist of 1 or more alphanumeric characters. No other characters are allowed.</string>
+    <string name="password_validation_error">The password must consist of 1 or more alphanumeric characters. No other characters are allowed.</string>
+    <string name="port_validation_error">The port number must be in the range 1 to 65535.</string>
+    <string name="wifi_state_receiver_label">WifiStateReceiver</string>
+    <string name="pst_connecting">connecting</string>
+    <string name="pst_connected">connected</string>
+    <string name="pst_failed">failed</string>
+    <string name="pst_unreachable">unreachable</string>
+    <string name="pst_disconnected">disconnected</string>
+    <string name="storage_warning">Warning: storage is not available. You may want to unmount it.</string>
+    <string name="widget_name">FTP Server Widget</string>
+    <string name="notif_settings_text">Settings</string>
+    <string name="swiftp_name">FTP Server</string>
+    <string name="swiftp_name_free">FTP Server (Free)</string>
+    <string name="swiftp_name_demo">FTP Server (Demo)</string>
+    <string name="running_label">FTP Server</string>
+    <string name="running_summary_stopped">Toggle the state of the ftp server</string>
+    <string name="running_summary_started">at %s</string>
+    <string name="running_summary_failed">Failed to start the FTP server, not connected to the local network (wifi or ethernet)?</string>
+    <string name="market_version_label">Market version</string>
+    <string name="market_version_summary">
+        This is the FTP Server Demo version.
+        Support development by getting the FTP Server from the android market.
+        Click here to go to the market.</string>
+    <string name="settings_label">Settings</string>
+    <string name="user_label">User</string>
+    <string name="loginsettings_label">Login settings...</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="show_password_label">Display password</string>
+    <string name="anonymous_label">Anonymous</string>
+    <string name="allow_anonymous_label">Allow anonymous login</string>
+    <string name="anonymous_summary">Anonymous logins are only allowed read access</string>
+    <string name="advancedsettings_label">Advanced settings...</string>
+    <string name="portnumber_label">Port Number</string>
+    <string name="chroot_label">Stay in folder</string>
+    <string name="acceptwifi_label">Accept connection from wifi</string>
+    <string name="wakelock_label">Keep device awake (full CPU speed)</string>
+    <string name="extra_label">Extra</string>
+    <string name="help_label">Help...</string>
+    <string name="about_label">About...</string>
+    <string name="help_dlg_title">FTP Server Help</string>
+    <!-- main activity-->
+    <string name="activity_main_send">发送文件</string>
+    <string name="activity_main_receive">接收文件</string>
+
+    <!-- receive from computer activity-->
+    <string name="activity_receive_from_computer_no_message">文件信息没有获取</string>
+    <string name="activity_receive_from_computer_download">下载文件</string>
+
+    <!-- scan layout-->
+    <string name="scan_tip">请点击对方头像进行文件传输</string>
+
+    <!-- chose to computer dialog layout-->
+    <string name="dialog_chose_have">有网传输</string>
+    <string name="dialog_chose_no">局域网传输</string>
+
+    <!-- receive file dialog-->
+    <string name="dialog_receive_file_fileCode">请输入文件ID</string>
+    <string name="dialog_receive_file_password">请输入校验码</string>
+
+    <!-- rename file dialog-->
+    <string name="dialog_rename_file">请输入新的文件名</string>
+    <!-- bg map filepath-->
+    <string name="offline_dir_bg">Collect_for_ArcGIS/region</string>
+    <!-- gl map filepath-->
+    <string name="offline_dir_gl">Collect_for_ArcGIS/road</string>
+    <string name="title_activity_test2">Test2Activity</string>
+    <string name="dcdt">导出地图</string>
+    <string name="dkdt">打开地图</string>
+
+    <string name="new_message_notification_title_template">New message: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="new_message_notification_placeholder_text_template">You said %1$s and lorem ipsum
+        dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel
+        semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
+        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
+        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
+        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
+        tortor.
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+</resources>
