@@ -88,7 +88,6 @@ public class MapCussorAdapter extends BaseSwipeAdapter {
         View v = View.inflate(SynopsisObj.getAppContext(), R.layout.map_list_item2, null);
         SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
         if (mIsSwipe) {
-
             v.findViewById(R.id.delete).setOnClickListener(
                 v12 -> {
                     AlertDialog.Builder dlg = new AlertDialog.Builder(mContext);
@@ -96,15 +95,12 @@ public class MapCussorAdapter extends BaseSwipeAdapter {
                     dlg.setMessage("确定删除 \"" + maps.get(position).mName + "\"?");
                     dlg.setPositiveButton("确定", (dialog, which) -> {
                         mContext.showDialog("删除中...");
-
                         new Thread() {
                             DbHelperDbHelper dbHelperDbHelper = null;
-
                             @Override
                             public void run() {
                                 try {
-                                    dbHelperDbHelper = DbHelperDbHelper.open()
-                                        .beginTransation();
+                                    dbHelperDbHelper = DbHelperDbHelper.open().beginTransation();
                                     dbHelperDbHelper.deleteTableByTableName(
                                         DbHelperDbHelper.JwdPrefix + maps.get(position).mId);
                                     dbHelperDbHelper
@@ -113,8 +109,7 @@ public class MapCussorAdapter extends BaseSwipeAdapter {
                                     dbHelperDbHelper.removeMapByid(maps.get(position).mId);
                                     dbHelperDbHelper.setTransactionSuccessful();
                                     mContext.runOnUiThread(() -> {
-                                        if (maps.get(position).mId == RecordingMedium
-                                            .getWorkMapId()) {
+                                        if (maps.get(position).mId == RecordingMedium.getWorkMapId()) {
                                             PreferencesUtils.putInt(SynopsisObj.getAppContext(),
                                                 Constants.CURRENT_USER_MAP,
                                                 Constants.STATUS_DEFAULT_NUM);
@@ -132,14 +127,11 @@ public class MapCussorAdapter extends BaseSwipeAdapter {
                                     if (dbHelperDbHelper != null) {
                                         dbHelperDbHelper.endTransaction();
                                     }
-
                                 }
-
                             }
                         }.start();
                     });
                     dlg.show();
-
                 }
             );
 
@@ -150,8 +142,7 @@ public class MapCussorAdapter extends BaseSwipeAdapter {
                     .setConfirmText("确定")
                     .setCancelText("取消")
                     .setConfirmClickListener(sweetAlertDialog -> {
-                        PreferencesUtils
-                            .putInt(mContext, Constants.CURRENT_USER_MAP,
+                        PreferencesUtils.putInt(mContext, Constants.CURRENT_USER_MAP,
                                 maps.get(position).mId);
                         PreferencesUtils.putString(mContext, Constants.CURRENT_JWD_MAP,
                             JwdPrefix + maps.get(position).mId);

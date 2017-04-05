@@ -1,5 +1,14 @@
 package com.master.ui.activity.map;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.master.R;
 import com.master.app.inter.OnSearchOperateListener;
 import com.master.app.manager.ConfigManager;
@@ -16,15 +25,6 @@ import com.master.presenter.ExportandWorkPresenter;
 import com.master.ui.activity.MvpActivity;
 import com.master.ui.adapter.MapCussorAdapter;
 import com.master.ui.viewer.ExportandWorkView;
-
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,6 @@ public class ExportandWorkActivity extends MvpActivity<ExportandWorkPresenter>
         lable.setText("注:地图导出后，将生成json文件，保存到exchange目录  \n 单击条目进行选中");
         lable.setEnabled(false);
         mListView.addHeaderView(lable);
-
     }
 
     public void export(int id) {

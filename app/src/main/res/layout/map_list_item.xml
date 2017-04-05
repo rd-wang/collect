@@ -22,18 +22,23 @@
             android:id="@+id/imgview_maplist"
             android:src="@drawable/ic_chevron_right_black_24dp"
             android:scaleType="centerInside"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:paddingRight="10dp"
             />
         <TextView
             android:id="@+id/tvfilename"
             style="@style/text_color_style"
             android:layout_width="wrap_content"
+            android:text="sdaflasjfk"
             android:layout_height="wrap_content"
             />
         <TextView
             android:id="@+id/tvfilesize"
             style="@style/text_color_style"
+            android:text="asfsdfj"
+            android:paddingLeft="10dp"
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

@@ -8,11 +8,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,8 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.esri.android.map.FeatureLayer;
 import com.esri.android.map.GraphicsLayer;
@@ -149,6 +148,8 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
 
     LocationListener locationListener = null;
 
+    Handler handler;
+
     double lat;
 
     double lng;
@@ -198,6 +199,17 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         mMapView.setOnTouchListener(myListener);
         // TODO handle rotation
 
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == 0) {
+                    mGraphicsLayermeasure.removeAll();
+                } else {
+                    super.handleMessage(msg);
+                }
+            }
+        };
         //初始化搜索框
         String[] mSearchSource = getResources().getStringArray(R.array.search_source);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), R.layout.spinner_textview, mSearchSource);
@@ -288,14 +300,10 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
                                             });
                                             //点击后高亮显示选中对象
                                             Graphic graphic = null;
-                                            if (Const.DrawType.POINT
-                                                    .equals(feature.getGeometry().getType().toString())) {
-                                                graphic = new Graphic(feature.getGeometry(),
-                                                        mRedMarkerSymbol);
-                                            } else if (Const.DrawType.POLYLINE
-                                                    .equals(feature.getGeometry().getType().toString())) {
-                                                graphic = new Graphic(feature.getGeometry(),
-                                                        simpleLineSymbol);
+                                            if (Const.DrawType.POINT.equals(feature.getGeometry().getType().toString())) {
+                                                graphic = new Graphic(feature.getGeometry(), mRedMarkerSymbol);
+                                            } else if (Const.DrawType.POLYLINE.equals(feature.getGeometry().getType().toString())) {
+                                                graphic = new Graphic(feature.getGeometry(), simpleLineSymbol);
                                             }
                                             mGraphicsLayerIdentify.addGraphic(graphic);
                                             feature = null;
@@ -320,7 +328,7 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         }
     }
 
-    public void clearSearchLd(){
+    public void clearSearchLd() {
         mGraphicsLayerIdentify.removeAll();
     }
 
@@ -364,8 +372,7 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
     private void onCreatePopupWindow(ArrayList data) {
         View listLayout = View.inflate(getActivity(), R.layout.attribute_list_activity, null);
         ListView listView = (ListView) listLayout.findViewById(R.id.listview);
-        TextView title = (TextView) listLayout.findViewById(R.id.title);
-        title.setText("详细信息");
+        ImageView back = (ImageView) listLayout.findViewById(R.id.hide_popupWindow);
         AttributeListAdapter myAdapter = new AttributeListAdapter(mContext, data);
         listView.setAdapter(myAdapter);
         WindowManager windowManager = (WindowManager) mContext
@@ -374,6 +381,14 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         int height = windowManager.getDefaultDisplay().getHeight() / 2;
         int width = windowManager.getDefaultDisplay().getWidth();
         PopupWindow popupWindow = new PopupWindow(listLayout, width, height);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(popupWindow!=null&&popupWindow.isShowing()){
+                    popupWindow.dismiss();
+                }
+            }
+        });
         // 使其聚集
         popupWindow.setFocusable(true);
         // 设置允许在外点击消失
@@ -445,7 +460,8 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
                 }
                 //将移动的点放入poly中
                 poly.lineTo((float) mapPt.getX(), (float) mapPt.getY());
-
+                Graphic graphic = new Graphic(poly, new SimpleLineSymbol(Color.BLUE, 5));
+                mGraphicsLayermeasure.addGraphic(graphic);
                 return true;
             }
             return super.onDragPointerMove(from, to);
@@ -472,10 +488,9 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
                 Polyline polyline = (Polyline) graphic.getGeometry();
                 BigDecimal db = new BigDecimal(polyline.calculateLength2D());
                 int polylinelength = db.intValue();
-                Toast toast = Toast.makeText(mContext, "", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.BOTTOM, 0, 0);//提示信息
-                toast.setText("长度：" + polylinelength + "米");
-                toast.show();
+                ToastUtils.showToast("长度：" + polylinelength + "米");
+                //3秒后清除测量划线
+                handler.sendEmptyMessageDelayed(0, 3000);
                 myListener.setType("");
                 return true;
             }
@@ -655,15 +670,17 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
 
     List<Point> pointList = null;
 
-    public int getLineLength(){
+    public int getLineLength() {
         Polyline polyline = (Polyline) graphic.getGeometry();
         BigDecimal db = new BigDecimal(polyline.calculateLength2D());
         int polylinelength = db.intValue();
         return polylinelength;
     }
+
     //drawMap时画的graphic
     Graphic graphic = null;
     Envelope envelope = null;
+
     public void drawMap(Object obj, String type) {
 
         if (Const.DrawType.POINT.equals(type)) {
@@ -830,7 +847,7 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
                 String searchWord = searchContent.getText().toString().trim();
                 searchLxList = DbHelperDbHelper.open().getSearchLdList(searchWord, RecordingMedium.getWorkMapId());
                 searchResultAdapter.setData(searchLxList);
-                if(searchLxList.size()==0){
+                if (searchLxList.size() == 0) {
                     ToastUtils.showToast("无记录");
                 }
                 searchContent.clearFocus();

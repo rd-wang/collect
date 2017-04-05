@@ -60,14 +60,14 @@ public class UncapMapActivity extends BaseActivity {
             String basemap = demoDataFile + File.separator + offlineDataSDCardDirName;
             File f = new File(basemap);
             File[] files = f.listFiles();
-            if(files==null||files.length==0){
+            if (files == null || files.length == 0) {
                 ToastUtils.showToast("无地图文件");
             }
             for (int j = 0; j < files.length; j++) {
                 ArrayList item = new ArrayList<String>();
                 String filename = files[j].getName();
                 if ((maptype.equals("gl") && filename.endsWith("geodatabase")) || (
-                    maptype.equals("bg") && filename.endsWith("tpk"))) {
+                        maptype.equals("bg") && filename.endsWith("tpk"))) {
                     item.add(files[j].getName());
                     item.add(FileUtils.FormetFileSize(files[j].length()));
                     item.add("");
@@ -77,6 +77,7 @@ public class UncapMapActivity extends BaseActivity {
                 ///Log.d("filename",files[j].getName());
             }
         } else if (maptype.equals("online")) {
+            title.setText("选择在线地图");
             ArrayList item1 = new ArrayList<>();
             item1.add(this.getResources().getString(R.string.basemap_url));
             item1.add(R.drawable.vectormap);

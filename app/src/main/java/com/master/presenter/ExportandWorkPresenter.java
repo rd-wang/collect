@@ -45,13 +45,13 @@ public class ExportandWorkPresenter extends MvpPresenter<ExportandWorkActivity, 
                 }
             }
         }).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(list -> {
-                if (list != null && list.size() > 0) {
-                    getView().initPortalItemView(list);
-                }
-            }, throwable -> {
-            });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    if (list != null && list.size() > 0) {
+                        getView().initPortalItemView(list);
+                    }
+                }, throwable -> {
+                });
 
     }
 
@@ -62,58 +62,59 @@ public class ExportandWorkPresenter extends MvpPresenter<ExportandWorkActivity, 
 
         getView().getTableEntityValue().doOnNext(tableContexts -> {
             getView().showDialog("导出中...");
-        }).subscribeOn(AndroidSchedulers.mainThread()).observeOn(Schedulers.io())
-            .forEach(tableContexts -> {
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .forEach(tableContexts -> {
 
-                //表记录
-                Map<String, List> resMap = new HashMap<>();
-                for (TableContext t : tableContexts) {
-                    ArrayList<Map<String, String>> list1 = new ArrayList();
-                    resMap.put(t.getTName(), list1);
-                    Cursor cursor = DbHelperDbHelper.open().excuteExporSql(t.getTName(), mid + "");
-                    String[] columnNames = cursor.getColumnNames();
+                    //表记录
+                    Map<String, List> resMap = new HashMap<>();
+                    for (TableContext t : tableContexts) {
+                        ArrayList<Map<String, String>> list1 = new ArrayList();
+                        resMap.put(t.getTName(), list1);
+                        Cursor cursor = DbHelperDbHelper.open().excuteExporSql(t.getTName(), mid + "");
+                        String[] columnNames = cursor.getColumnNames();
+                        Map m = null;
+                        while (cursor.moveToNext()) {
+                            m = new HashMap();
+                            for (int i = 0; i < columnNames.length; i++) {
+                                String columnstring = cursor
+                                        .getString(cursor.getColumnIndex(columnNames[i]));
+                                LoggerUtils.d(TAG, "列名:" + columnNames[1] + "值:" + columnstring);
+                                //根据fid查询经纬度表
+                                m.put(columnNames[i], columnstring);
+                            }
+                            list1.add(m);
+                        }
+                    }
+
+                    //获取工作地图绑定的经纬度表，并查
+                    String jwbTableByMapId = RecordingMedium.getJWBTableByMapId(mid);
+                    Cursor cursor1 = DbHelperDbHelper.open().excuteExporSql(jwbTableByMapId);
+                    String[] columnNames = cursor1.getColumnNames();
+                    ArrayList<Map<String, String>> temp = new ArrayList();
+                    resMap.put(jwbTableByMapId, temp);
                     Map m = null;
-                    while (cursor.moveToNext()) {
+                    while (cursor1.moveToNext()) {
                         m = new HashMap();
                         for (int i = 0; i < columnNames.length; i++) {
-                            String columnstring = cursor
-                                .getString(cursor.getColumnIndex(columnNames[i]));
+                            String columnstring = cursor1
+                                    .getString(cursor1.getColumnIndex(columnNames[i]));
                             LoggerUtils.d(TAG, "列名:" + columnNames[1] + "值:" + columnstring);
                             //根据fid查询经纬度表
                             m.put(columnNames[i], columnstring);
                         }
-                        list1.add(m);
+                        temp.add(m);
                     }
-                }
 
-                //获取工作地图绑定的经纬度表，并查
-                String jwbTableByMapId = RecordingMedium.getJWBTableByMapId(mid);
-                Cursor cursor1 = DbHelperDbHelper.open().excuteExporSql(jwbTableByMapId);
-                String[] columnNames = cursor1.getColumnNames();
-                ArrayList<Map<String, String>> temp = new ArrayList();
-                resMap.put(jwbTableByMapId, temp);
-                Map m = null;
-                while (cursor1.moveToNext()) {
-                    m = new HashMap();
-                    for (int i = 0; i < columnNames.length; i++) {
-                        String columnstring = cursor1
-                            .getString(cursor1.getColumnIndex(columnNames[i]));
-                        LoggerUtils.d(TAG, "列名:" + columnNames[1] + "值:" + columnstring);
-                        //根据fid查询经纬度表
-                        m.put(columnNames[i], columnstring);
+                    String toJson = JsonUtils.toJson(resMap);
+                    LoggerUtils.d(TAG, toJson);
+                    boolean b = FileManager.saveIntoDirs(toJson);
+                    if (b) {
+                        getView().hintDialog("导出成功");
+                    } else {
+                        getView().hintDialog("导出失败");
                     }
-                    temp.add(m);
-                }
-
-                String toJson = JsonUtils.toJson(resMap);
-                LoggerUtils.d(TAG, toJson);
-                boolean b = FileManager.saveIntoDirs(toJson);
-                if (b) {
-                    getView().hintDialog("导出成功");
-                } else {
-                    getView().hintDialog("导出失败");
-                }
-            }, throwable -> System.out.println("Throwable"));
+                }, throwable -> System.out.println("Throwable"));
 
     }
 
