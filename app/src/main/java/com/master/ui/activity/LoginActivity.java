@@ -1,10 +1,12 @@
 package com.master.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.master.R;
 import com.master.app.Constants;
 import com.master.app.SynopsisObj;
+import com.master.app.tools.CheckSeriesNoUtils;
 import com.master.app.tools.ClipboardUtils;
 import com.master.app.tools.CommonUtils;
 import com.master.app.tools.LoggerUtils;
@@ -37,11 +40,19 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.btn_submit)
     AppCompatButton btnSubmit;
+
     @BindView(R.id.ev_imei)
     TextView evImei;
+
     private String deviceIMEI;
+
     @BindView(R.id.dw_name)
     EditText dwName;
+
+    @BindView(R.id.seriesNo)
+    EditText seriesNo;
+
+    private String dwmc;
     //    @BindView(R.id.iv_copy)
 //    ImageView ivCopy;
 
@@ -65,19 +76,26 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.send_email:
-                String trim = dwName.getText().toString().trim();
-                if (StringUtils.isEmpty(trim)) {
+                dwmc = dwName.getText().toString().trim();
+                if (StringUtils.isEmpty(dwmc)) {
                     ToastUtils.showToast("请输入单位名称");
                     return;
                 }
-                Intent data = new Intent(Intent.ACTION_SENDTO);
-                data.setData(Uri.parse("mailto:179366099@qq.com"));
-                data.putExtra(Intent.EXTRA_SUBJECT, "公路通验证邮件");
-                data.putExtra(Intent.EXTRA_TEXT, "deviceIMEI:" + deviceIMEI + ";" + "单位名称:" + trim + ";");
-                startActivity(data);
+                String msg = "标识码:" + deviceIMEI + "\n" + "单位名称:" + dwmc + "\n"+"用于APP注册";
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData mClipData = ClipData.newPlainText("Label", msg);
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                ToastUtils.showToast("复制成功");
                 break;
             case R.id.btn_submit:
-                attemptLogin(mOrignaz, mOrignaz);
+                String trim = seriesNo.getText().toString().trim();
+                dwmc = dwName.getText().toString().trim();
+                if (TextUtils.isEmpty(dwmc)||CheckSeriesNoUtils.checkSeriesNo(dwmc, deviceIMEI, trim)) {
+                    startMainView();
+                } else {
+                    Toast.makeText(SynopsisObj.getAppContext(), "请输入合法验证码", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -108,14 +126,6 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public void attemptLogin(String mOrignaz, String mCapcha) {
-        if (attemptLoginMsg(mOrignaz, mCapcha)) {
-            startMainView();
-        } else {
-            Toast.makeText(SynopsisObj.getAppContext(), "请输入合法验证码", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -125,10 +135,6 @@ public class LoginActivity extends BaseActivity {
 
         return false;
 
-    }
-
-    public boolean attemptLoginMsg(String organiz, String captcha) {
-        return true;
     }
 
     public static String getDeviceIMEI(Context context) {

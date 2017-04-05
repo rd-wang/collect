@@ -65,6 +65,7 @@
         >
 
         <com.master.app.weight.CustomEditView
+            android:id="@+id/seriesNo"
             app:textLeftBottomRadius="8dp"
             app:textLeftTopRadius="8dp"
             app:textRightTopRadius="8dp"
@@ -89,7 +90,7 @@
             android:layout_width="96dp"
             android:layout_height="39dp"
             android:textSize="11sp"
-            android:hint="获取验证码"
+            android:hint="复制到剪贴板"
             android:layout_marginLeft="5dp"
             android:gravity="center"
             />
