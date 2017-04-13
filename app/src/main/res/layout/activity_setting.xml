@@ -203,6 +203,67 @@
                     android:lines="1"
                     />
             </LinearLayout>
+
+            <View style="@style/line_style" />
+
+            <FrameLayout style="@style/match_wrap">
+
+                <LinearLayout
+                    style="@style/match_match"
+                    android:layout_height="57dp"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        style="@style/wrap_wrap"
+                        android:layout_marginTop="8dp"
+                        android:text="自动保存"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        style="@style/wrap_wrap"
+                        android:layout_marginTop="8dp"
+                        android:text="采集路线时，每采集一定数量的点时自动保存"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:checked="false"
+                    android:id="@+id/sc_autosave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginRight="8dp"
+                    />
+            </FrameLayout>
+
+            <View style="@style/line_style" />
+
+            <LinearLayout
+                style="@style/match_wrap"
+                android:layout_height="57dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    style="@style/wrap_wrap"
+                    android:text="自动保存点数(个)"
+                    android:textSize="15sp"
+                    />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:enabled="false"
+                    android:id="@+id/et_autosave"
+                    style="@style/match_wrap"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="13sp"
+                    android:inputType="number"
+                    android:lines="1"
+                    />
+            </LinearLayout>
         </LinearLayout>
 
     </com.master.app.weight.WarrScrollView>

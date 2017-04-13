@@ -1,6 +1,7 @@
 package com.master.ui.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import android.widget.Toast;
 
 import com.esri.android.map.GraphicsLayer;
 import com.master.R;
+import com.master.app.Constants;
 import com.master.app.SynopsisObj;
+import com.master.app.inter.CallBack;
 import com.master.app.inter.CallBackLocation;
 import com.master.app.inter.CommonListener;
 import com.master.app.inter.OnClickAnimation;
@@ -31,12 +34,14 @@ import com.master.app.inter.Type;
 import com.master.app.manager.AcquisitionPara;
 import com.master.app.manager.RecordingMedium;
 import com.master.app.orm.DbHelperDbHelper;
+import com.master.app.tools.CommonUtils;
 import com.master.app.tools.ContextUtils;
 import com.master.app.tools.DataUtils;
 import com.master.app.tools.DialogUtils;
 import com.master.app.tools.FileManager;
 import com.master.app.tools.GPSUtils;
 import com.master.app.tools.LoggerUtils;
+import com.master.app.tools.PreferencesUtils;
 import com.master.app.tools.ToastUtils;
 import com.master.app.weight.APSTSViewPager;
 import com.master.app.weight.AdvancedPagerSlidingTabStrip;
@@ -62,6 +67,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.master.R.id.lx_info;
+import static com.master.app.Constants.OUT_COLLECTION_AUTO_SAVE;
+import static com.master.app.Constants.OUT_COLLECTION_AUTO_SAVE_POINT_NUMBER;
 import static com.master.ui.fragment.map.LayerFragment.S_LayerFragment;
 
 public class MainActivity extends MvpActivity<MainPresenter>
@@ -146,6 +153,8 @@ public class MainActivity extends MvpActivity<MainPresenter>
     private static boolean mIsbind;
     private RxPermissions mRxPermissions;
     private boolean islxfd = false;
+    private boolean settingAutoSave;
+    private int settingAutoSavePoints;
 
     @Override
     protected MainPresenter createPresenter() {
@@ -162,6 +171,14 @@ public class MainActivity extends MvpActivity<MainPresenter>
         sheet = new BottomSheetDialog(this);
         HideIMEUtil.wrap(this);
 
+        LoggerUtils.d("是否开启常亮", PreferencesUtils.getBoolean(this, Constants.SC_WAKE_LOCK, false) + "");
+        if (PreferencesUtils.getBoolean(this, Constants.SC_WAKE_LOCK, false)) {
+            CommonUtils.toggleWalkLook(this, true);
+        }
+        settingAutoSave = PreferencesUtils.getBoolean(this, OUT_COLLECTION_AUTO_SAVE, true);
+        settingAutoSavePoints = PreferencesUtils.getInt(this, OUT_COLLECTION_AUTO_SAVE_POINT_NUMBER, 50);
+
+
         mRxPermissions = new RxPermissions(this);
 
         mRxPermissions
@@ -174,10 +191,10 @@ public class MainActivity extends MvpActivity<MainPresenter>
                             //  未获取权限
                             ToastUtils.showToast("您没有授权GPS，请在设置中打开授权");
                         }
-                    }else{
-                        if(permission.granted){
+                    } else {
+                        if (permission.granted) {
                             FileManager.init(this);
-                        }else{
+                        } else {
                             ToastUtils.showToast("您没有打开写入/读取SD卡的权限，文件夹初始化失败，您可能无法进行地图json导出，无法选取路网背景地图等");
                         }
                     }
@@ -337,6 +354,8 @@ public class MainActivity extends MvpActivity<MainPresenter>
     @Override
     public void showAirPanel() {
         mBehavior1 = BottomSheetBehavior.from(lgdAirpanel);
+        //采集状态禁用
+        lgdAirpanel.setNestedScrollingEnabled(false);
         if (mBehavior1.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             mBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
         } else {
@@ -390,7 +409,7 @@ public class MainActivity extends MvpActivity<MainPresenter>
 
 
     @OnClick({R.id.iv_Btn, R.id.tv_lxfd, R.id.btn_dcj, R.id.btn_tzcj, R.id.btn_ztcj, R.id.btn_jxcj,
-            R.id.save, R.id.reset})
+            R.id.save, R.id.reset, R.id.btn_tccj})
     public void onClick(View view) {
         if (!RecordingMedium.checkWorkMap()) {
             showToast("请先设置工作地图");
@@ -429,9 +448,11 @@ public class MainActivity extends MvpActivity<MainPresenter>
             case R.id.btn_dcj:  //点采集
                 showExtra();
                 break;
-            case R.id.btn_tzcj: //停止采集
-                islxfd = false;
-                LocalServer.getServer().stop();
+            case R.id.btn_tzcj: //停止采集 -- 暂停+分段
+                LocalServer.getServer().pause();
+                btn_ztcj.setEnabled(false);
+                btn_jxcj.setEnabled(true);
+                islxfd = true;
                 mPanelType = DEFUALT_NUM_P_TYPE;
                 if (DataUtils.isNotEmpty(lineList)) {
                     mtable = lineList.get(0);
@@ -439,7 +460,7 @@ public class MainActivity extends MvpActivity<MainPresenter>
                 List<Fields> t_lds = getArguments(mtable.getTName(), new ArrayList<>());
                 builderSheet(t_lds);
                 show(findViewById(R.id.main_scroll));
-                hintAirPanel();
+//                hintAirPanel();
                 break;
             case R.id.btn_ztcj:
                 //暂停
@@ -453,6 +474,23 @@ public class MainActivity extends MvpActivity<MainPresenter>
                 btn_jxcj.setEnabled(false);
                 LocalServer.getServer().resume();
                 ToastUtils.showToast("继续采集");
+                break;
+            case R.id.btn_tccj:
+                new DialogUtils.Builder(this)
+                        .addMsg("确认退出采集吗？")
+                        .addSubmittext("确定").addCancel("取消")
+                        .build()
+                        .initSubmit(new CallBack() {
+                            @Override
+                            public void call(DialogInterface dialog) {
+                                LocalServer.getServer().stop();
+                                mPanelType = DEFUALT_NUM_P_TYPE;
+                                resetCollectData();
+                                hintAirPanel();
+                                LayerFragment.S_LayerFragment.hideSearchAndButton(false);
+                                dialog.dismiss();
+                            }
+                        }).showDialog();
                 break;
             case R.id.reset:
                 if (behavior != null && behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
@@ -502,7 +540,7 @@ public class MainActivity extends MvpActivity<MainPresenter>
 
 
     public void startLocation() {
-        LocalServer.getServer().start(this);
+        LocalServer.getServer().start(this, this);
         ToastUtils.showToast("开始采集");
     }
 
@@ -511,16 +549,19 @@ public class MainActivity extends MvpActivity<MainPresenter>
         lat_lng_list = locaDates;
         S_LayerFragment.drawMap(locaDte, Const.DrawType.POLYLINE);
         lxInfo.setText(currentLXBM + "  " + S_LayerFragment.getLineLength() + "米");
-        if (lat_lng_list.size() >= 50) {
-            //每50个点save一次
-            LocalServer.getServer().pause();
-            if (DbHelperDbHelper.open().addPointList(locaDates, RecordingMedium.getCurrentJwdName(), currentLXBM)) {
-                autoSavePointCount += lat_lng_list.size();
-                lat_lng_list.clear();
-                showToast("自动保存");
+        if(settingAutoSave){
+            if (lat_lng_list.size() >= settingAutoSavePoints) {
+                //每？个点save一次
+                LocalServer.getServer().pause();
+                if (DbHelperDbHelper.open().addPointList(locaDates, RecordingMedium.getCurrentJwdName(), currentLXBM)) {
+                    autoSavePointCount += lat_lng_list.size();
+                    lat_lng_list.clear();
+                    showToast("自动保存");
+                }
+                LocalServer.getServer().resume();
             }
-            LocalServer.getServer().resume();
         }
+
         LoggerUtils.d("MainActivity call", "locaDates.size():" + locaDates.size() + " lat_lng_list.size():" + lat_lng_list.size());
     }
 

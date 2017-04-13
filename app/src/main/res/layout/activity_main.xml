@@ -167,6 +167,19 @@
                         android:text="停止采集"
                         app:layout_columnWeight="1"
                         />
+                    <com.rey.material.widget.Button
+                        android:padding="6dp"
+                        android:drawableTop="@drawable/ic_edit_input_clear"
+                        android:id="@+id/btn_tccj"
+                        style="@style/text_color_style"
+                        android:layout_width="0dp"
+                        android:layout_height="92.5dp"
+                        android:background="@drawable/shape"
+                        android:layout_margin="1px"
+                        android:gravity="center"
+                        android:text="退出采集"
+                        app:layout_columnWeight="1"
+                        />
 
                 </android.support.v7.widget.GridLayout>
 

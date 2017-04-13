@@ -177,18 +177,6 @@
       "fmodify":0
     },
     {
-      "fName": "SSLX",
-      "fNameCHS": "所属路线",
-      "fType": "Char",
-      "fLen": "20",
-      "fDec": "0",
-      "fKey": "true",
-      "frequired": "true",
-      "fcode": "edit_text",
-      "fShow":"true",
-      "fmodify":0
-    },
-    {
       "fName": "QLBM",
       "fNameCHS": "桥梁编码",
       "fType": "Char",

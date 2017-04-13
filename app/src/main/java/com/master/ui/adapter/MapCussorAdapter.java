@@ -99,8 +99,8 @@ public class MapCussorAdapter extends BaseSwipeAdapter {
                             DbHelperDbHelper dbHelperDbHelper = null;
                             @Override
                             public void run() {
+                                dbHelperDbHelper = DbHelperDbHelper.open().beginTransation();
                                 try {
-                                    dbHelperDbHelper = DbHelperDbHelper.open().beginTransation();
                                     dbHelperDbHelper.deleteTableByTableName(
                                         DbHelperDbHelper.JwdPrefix + maps.get(position).mId);
                                     dbHelperDbHelper

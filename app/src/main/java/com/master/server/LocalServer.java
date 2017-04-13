@@ -1,5 +1,6 @@
 package com.master.server;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -76,13 +77,8 @@ public class LocalServer extends Service implements LocationHelper {
 
     }
 
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-    }
-
     //开始采集
-    public boolean start(CallBackLocation callBack) {
+    public boolean start(CallBackLocation callBack, Activity activity) {
 
         if (initializationIsComplete) {
             on_off = true;
@@ -91,7 +87,7 @@ public class LocalServer extends Service implements LocationHelper {
         } else {
             // TODO: 2017/2/28   第二个参数应该是读取设置得到的.
 
-            Boolean aBoolean = mLocalUtils.initLocationListener(getApplication(), PreferencesUtils.getInt(this, OUT_COLLECTION_TIME, 5));
+            Boolean aBoolean = mLocalUtils.initLocationListener(activity, PreferencesUtils.getInt(this, OUT_COLLECTION_TIME, 5));
             if (aBoolean) {
                 this.mCallBack = callBack;
                 on_off = true;
@@ -170,6 +166,8 @@ public class LocalServer extends Service implements LocationHelper {
 //                    LoggerUtils.d("Localutils", "***卫星少于3颗***");
 //                } else if (mGpsSatellite > 7) {
 //                    LoggerUtils.d("Localutils", "***卫星大于7颗***");
+//                } else{
+//
 //                }
 //                break;
 //            case GpsStatus.GPS_EVENT_STARTED: {

@@ -34,9 +34,10 @@
             >
             <Spinner
                 android:id="@+id/search_menu"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:entries="@array/m_point_label"/>
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/jixucaiji"
+                android:layout_height="wrap_content"/>
 
             <EditText
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -46,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="输入编码进行搜索"
+                android:hint="输入路线编码进行搜索"
                 style="@style/Material.Widget.EditText"
                 android:textColorHint="@color/time_gray"
                 android:imeOptions="actionSearch"
@@ -85,6 +86,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/buttons_layout"
         android:layout_marginLeft="22dp"
         android:layout_marginBottom="78dp"
         android:layout_gravity="bottom"

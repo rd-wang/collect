@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -536,18 +535,19 @@ public class CommonUtils {
         return false;
     }
 
+    public static PowerManager.WakeLock mWakeLock;
+
     //设置屏幕长亮
     public static void toggleWalkLook(Context context, boolean tag) {
-
-        PowerManager powerManager = (PowerManager) context.getSystemService(Service.POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Lock");
-        wakeLock.setReferenceCounted(false);
+        if (mWakeLock == null) {
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
+            mWakeLock.setReferenceCounted(false);
+        }
         if (tag)
-            wakeLock.acquire();
+            mWakeLock.acquire();
         else
-            wakeLock.release();
-
-
+            mWakeLock.release();
     }
 
 }

@@ -165,16 +165,17 @@ public class DbHelperDbHelper {
     public static final int JWD_CJSJ_COLUMN_POSITION = 6;
 
 
-    private static final String LX_TABLE = "T_LX";
+    public static final String LX_TABLE = "T_LX";
 
-    private static final String LX_LXBM = "LXBM";
+    public static final String LX_LXBM = "LXBM";
 
     private static final String LX_LXMC = "LXMC";
 
     private static String sql_T_LX = "CREATE TABLE " + LX_TABLE + " (" +
-            JWD_CROWID_COLUMN + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
             LX_LXBM + " varchar(50) NOT NULL," +
-            LX_LXMC + " varchar(500)" +
+            JWD_CROWID_COLUMN + " INTEGER  PRIMARY KEY AUTOINCREMENT," +
+            LX_LXMC + " varchar(500)," +
+            MAP_NUMBER_COLUMN + " INTEGER NOT NULL" +
             ")";
 
 
@@ -324,7 +325,7 @@ public class DbHelperDbHelper {
 
     public List<LdData> getSearchLdList(String ldbm, int mapid) {
         List<LdData> list = new ArrayList();
-        String sql = "select LDBM,LDMC,LDXLH,QDJWDID,ZDJWDID,SSLX,MAPID from T_ld " +
+        String sql = "select LDBM,LDMC,LDXLH,QDJWDID,ZDJWDID,LXBM,MAPID from T_ld " +
                 "where LDBM like '%" + ldbm + "%' and MAPID = " + mapid + " order by ldbm";
         Cursor cursor = mDb.rawQuery(sql, null);
         int count = cursor.getCount();
@@ -418,6 +419,93 @@ public class DbHelperDbHelper {
 
         return res;
     }
+
+    public long updateLXTable(String LXBM, String LXMC, String crowId) {
+        if (LXBM == null || LXMC == null || crowId == null) {
+            return -1;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("LXBM", LXBM);
+        contentValues.put("LXMC", LXMC);
+        return mDb.update("T_LX", contentValues, " CROWID = ?", new String[]{crowId});
+    }
+
+    public ArrayList<LocaDate> queryLXByBMAndJwd(String lxbm, String mapid) {
+        ArrayList<LocaDate> res = null;
+        String tname = JwdPrefix + mapid;
+        String sql = "select JD,WD from " + tname + " where FID='" + lxbm + "' AND CJDX = 'T_ld' ORDER BY CROWID;";
+        Cursor cursor = mDb.rawQuery(sql, null);
+        LoggerUtils.d("查询路线的sql", sql);
+        int count = cursor.getCount();
+        if (count <= 0) {
+        } else {
+            res = new ArrayList<>();
+        }
+        while (cursor.moveToNext()) {
+            Double lng = Double.parseDouble(cursor.getString(cursor.getColumnIndex("JD")));
+            Double lat = Double.parseDouble(cursor.getString(cursor.getColumnIndex("WD")));
+            LoggerUtils.d(TAG, "查询获取经/纬度: " + lng + " / " + lat);
+            res.add(new LocaDate.Builder().initSite(new Point(lat, lng)).builder());
+        }
+        cursor.close();
+
+        return res;
+    }
+
+    public boolean queryHasRecord(String lxbm, int mapid) {
+        String tname = JwdPrefix + mapid;
+        String sql = "select JD,WD from " + tname + " where FID='" + lxbm + "'";
+        Cursor cursor = mDb.rawQuery(sql, null);
+        LoggerUtils.d("查询路线的sql", sql);
+        int count = cursor.getCount();
+        if (count > 0) {
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        return false;
+    }
+
+    /**
+     * @param tname 表名
+     * @param attr  XXBM
+     * @param text  编码值
+     *              删除经纬度表中的记录 和tname表中的记录
+     */
+    public boolean deleteRecord(String tname, String attr, String text, int mapid) {
+        beginTransation();
+        try {
+            String jwd = JwdPrefix + mapid;
+            int delete = mDb.delete(jwd, "FID=?", new String[]{text});
+            int delete1 = mDb.delete(tname, attr + "=?", new String[]{text});
+            setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            endTransaction();
+        }
+        return true;
+    }
+
+    public boolean deleteLDRecord(String tname, String LDBM, String LXBM, int mapid, String qd, String zd) {
+        beginTransation();
+        try {
+            String jwd = JwdPrefix + mapid;
+            int delete = mDb.delete(jwd, "FID=? AND CROWID>=? AND CROWID<=?", new String[]{LXBM, qd, zd});
+            int delete1 = mDb.delete(tname, "LDBM=?", new String[]{LDBM});
+            setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            endTransaction();
+        }
+        return true;
+
+    }
+
 
     private abstract class DbHelper extends SQLiteOpenHelper {
 

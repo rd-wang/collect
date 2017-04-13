@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.master.R;
 import com.master.app.SynopsisObj;
+import com.master.app.manager.RecordingMedium;
 import com.master.app.orm.DbHelperDbHelper;
 import com.master.app.tools.CommonUtils;
 import com.master.app.tools.LoggerUtils;
 import com.master.app.tools.ThreadPoolUtils;
+import com.master.app.tools.ToastUtils;
 import com.master.bean.Envelope;
 import com.master.bean.LocaDate;
 import com.master.constant.Const;
@@ -28,6 +30,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.master.app.orm.DbHelperDbHelper.LX_LXBM;
+import static com.master.app.orm.DbHelperDbHelper.LX_TABLE;
 import static com.master.app.orm.DbHelperDbHelper.MAP_NUMBER_COLUMN;
 
 /**
@@ -99,6 +103,12 @@ public class WorkParaListAdapter extends BaseAdapter {
         });
 
         holder.ctvModif.setOnClickListener(v -> {
+            if (LX_TABLE.equals(tname)) {
+                if(DbHelperDbHelper.open().queryHasRecord(map.get("def_TBM"), RecordingMedium.getWorkMapId())){
+                    ToastUtils.showToast("此路线不可修改");
+                    return;
+                }
+            }
             Intent intent = new Intent(mContext, ModifActivity.class);
             Envelope<Map> e = new Envelope();
             e.setT(map);
@@ -109,12 +119,18 @@ public class WorkParaListAdapter extends BaseAdapter {
 
         holder.cbOrientation.setOnClickListener(v -> {
             String MAPID = map.get(MAP_NUMBER_COLUMN);
-            String lxbm = map.get("SSLX");
+            String lxbm = map.get(LX_LXBM);
             ThreadPoolUtils.execute(() -> {
-                if ("T_ld".equals(tname)) {
-                    ArrayList<LocaDate> ldList = DbHelperDbHelper.open().queryLDByBMAndJwd(lxbm, tbm, MAPID);
+                if ("T_ld".equals(tname) || "T_LX".equals(tname)) {
+                    ArrayList<LocaDate> ldList;
+                    if ("T_ld".equals(tname)) {
+                        ldList = DbHelperDbHelper.open().queryLDByBMAndJwd(lxbm, tbm, MAPID);
+                    } else {
+                        ldList = DbHelperDbHelper.open().queryLXByBMAndJwd(tbm, MAPID);
+                    }
                     if (ldList == null || ldList.size() <= 0) {
-                        LoggerUtils.d("WorkParaListAdapter", "此路线点信息为0");
+                        ToastUtils.showToast("此路线点信息为0");
+                        return;
                     }
                     Intent intent = new Intent(mContext, LocationActivity.class);
                     intent.putExtra(Const.SHOW_ATTR_TYPE, Const.DrawType.POLYLINE);

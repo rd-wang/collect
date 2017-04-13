@@ -39,7 +39,7 @@ public class GPSUtils {
         new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("提示")
                 .setContentText("GPS未开启，不能初始化位置服务，是否去设置开启GPS?")
-                .setConfirmText("Yes")
+                .setConfirmText("去开启")
                 .setConfirmClickListener(sweetAlertDialog -> {
                     Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     CommonUtils.toActivity((Activity) context, myIntent);

@@ -21,21 +21,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
-
-                <com.master.app.weight.CustomTextView
-                    android:id="@+id/ct_roadAttr"
-                    style="@style/text_color_style"
-                    android:layout_width="130dp"
-                    android:layout_height="37dp"
-                    android:gravity="center"
-                    android:text="路网地图属性"
-                    android:textSize="14sp"
-                    app:textLeftBottomRadius="8dp"
-                    app:textLeftTopRadius="8dp"
-                    app:textSolidColor="@color/white"
-                    app:textStrokeColor="@color/light_dark"
-                    app:textStrokeWidth="1dp" />
-
                 <com.master.app.weight.CustomTextView
                     android:id="@+id/ct_workAttr"
                     style="@style/text_color_style"
@@ -45,11 +30,28 @@
                     android:gravity="center"
                     android:text="工作地图属性"
                     android:textSize="14sp"
+                    app:textLeftBottomRadius="8dp"
+                    app:textLeftTopRadius="8dp"
+
+                    app:textSolidColor="@color/white"
+                    app:textStrokeColor="@color/light_dark"
+                    app:textStrokeWidth="1dp" />
+
+                <com.master.app.weight.CustomTextView
+                    android:id="@+id/ct_roadAttr"
+                    style="@style/text_color_style"
+                    android:layout_width="130dp"
+                    android:layout_height="37dp"
+                    android:gravity="center"
+                    android:text="路网地图属性"
+                    android:textSize="14sp"
                     app:textRightBottomRadius="8dp"
                     app:textRightTopRadius="8dp"
                     app:textSolidColor="@color/white"
                     app:textStrokeColor="@color/light_dark"
                     app:textStrokeWidth="1dp" />
+
+
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
@@ -57,7 +59,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?actionBarSize">
 
         <com.master.app.weight.SearchListView
             android:id="@+id/listview_gl"

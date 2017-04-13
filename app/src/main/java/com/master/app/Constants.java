@@ -88,4 +88,9 @@ public class Constants {
 
     //车速开关
     public static final String OUT_COLLECTION_SWICTH = "colloction_SWITCH";
+
+    //自动保存
+    public static final String OUT_COLLECTION_AUTO_SAVE = "colloction_AUTOSAVE";
+    //自动保存数量
+    public static final String OUT_COLLECTION_AUTO_SAVE_POINT_NUMBER = "colloction_AUTOPOINT";
 }

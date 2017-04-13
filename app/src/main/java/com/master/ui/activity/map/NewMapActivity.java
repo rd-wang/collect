@@ -1,5 +1,11 @@
 package com.master.ui.activity.map;
 
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.master.R;
 import com.master.app.orm.DbHelperDbHelper;
 import com.master.app.tools.ActionBarManager;
@@ -8,12 +14,6 @@ import com.master.app.tools.StringUtils;
 import com.master.contract.BaseActivity;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorInflater;
-
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.Date;
 
@@ -74,11 +74,11 @@ public class NewMapActivity extends BaseActivity implements Animator.AnimatorLis
             DbHelperDbHelper.open().newJWDTable(ap);
             tv_name.setText("");
             new DialogUtils.Builder(this)
-                .addMsg("新建成功，请到管理地图查看。").build().showDialog();
+                .addMsg("新建成功，请到管理地图查看。").addCancel("确定").build().showDialog();
 
         } else {
             new DialogUtils.Builder(this)
-                .addMsg("新建失败，请重试。").build().showDialog();
+                .addMsg("新建失败，请重试。").addCancel("确定").build().showDialog();
         }
         btnSubmit.clearAnimation();
         animation.removeListener(this);

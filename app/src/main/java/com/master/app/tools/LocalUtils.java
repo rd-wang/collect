@@ -1,5 +1,7 @@
 package com.master.app.tools;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.GpsSatellite;
@@ -9,14 +11,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.master.app.inter.LocationHelper;
-import com.master.ui.activity.MainActivity;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.Iterator;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * <p>Title:${type_inName}<p/>
@@ -59,7 +58,7 @@ public class LocalUtils {
     }
 
     //初始化监听
-    public Boolean initLocationListener(Context pContext, int time) {
+    public Boolean initLocationListener(Activity pContext, int time) {
 
         if (mLocationHelper == null) {
             return null;
@@ -76,11 +75,23 @@ public class LocalUtils {
 
         LoggerUtils.d("位置供应模式", "provider=" + mBestProvider);
         if (GPSUtils.hasGPSDevice(pContext)) {
-            locationManager
-                    .requestLocationUpdates(mBestProvider, time * 1000, 10f,
-                            myLocationListener);
-            LoggerUtils.d("LocalUtils：", "采集间隔：" + (time * 1000));
-            locationManager.addGpsStatusListener(myGpsStatusListener);
+            RxPermissions rxPermissions = new RxPermissions(pContext);
+            rxPermissions
+                    .request(Manifest.permission.ACCESS_FINE_LOCATION)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            try {
+                                locationManager.requestLocationUpdates(mBestProvider, time * 1000, 10f, myLocationListener);
+                                LoggerUtils.d("LocalUtils：", "采集间隔：" + (time * 1000));
+                                locationManager.addGpsStatusListener(myGpsStatusListener);
+                            } catch (SecurityException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            ToastUtils.showToast("权限不允许获取GPS信息");
+                        }
+                    });
+
             return true;
         }
         return false;
@@ -135,8 +146,12 @@ public class LocalUtils {
 
         @Override
         public void onGpsStatusChanged(int event) {
-            GpsStatus gpsStatus = locationManager.getGpsStatus(null);
-            mLocationHelper.updateGPSStatus(event, gpsStatus);
+            try {
+                GpsStatus gpsStatus = locationManager.getGpsStatus(null);
+                mLocationHelper.updateGPSStatus(event, gpsStatus);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -163,11 +178,24 @@ public class LocalUtils {
 
     //返回卫星个数
     public int getGpsSatellite(GpsStatus gpsStatus) {
+//        这个不一定
+//        int count = 0;
+//        Iterable<GpsSatellite> iterable = gpsStatus.getSatellites();
+//        for (GpsSatellite satellite : iterable) {
+//            //只有信躁比不为0的时候才算搜到了星
+//            if (satellite.getSnr() != 0) {
+//                count++;
+//            }
+//        }
+//        return count;
+
+        int maxSatellites = gpsStatus.getMaxSatellites();
+        Iterator<GpsSatellite> it = gpsStatus.getSatellites().iterator();
         int count = 0;
-        Iterable<GpsSatellite> iterable = gpsStatus.getSatellites();
-        for (GpsSatellite satellite : iterable) {
+        while (it.hasNext() && count <= maxSatellites) {
+            GpsSatellite s = it.next();
             //只有信躁比不为0的时候才算搜到了星
-            if (satellite.getSnr() != 0) {
+            if (s.getSnr() != 0) {
                 count++;
             }
         }
@@ -181,17 +209,22 @@ public class LocalUtils {
 
 
     public static Location getLastLocation(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Location myLocation = null;
+        try {
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        Location myLocation = lm
-                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        if (myLocation == null) {
-            myLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (myLocation != null) {
-                double lat1 = myLocation.getLatitude();
-                double lng1 = myLocation.getLongitude();
+            if (myLocation == null) {
+                myLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (myLocation != null) {
+                    double lat1 = myLocation.getLatitude();
+                    double lng1 = myLocation.getLongitude();
+                    double altitude = myLocation.getAltitude();
+                    float speed = myLocation.getSpeed();
+                }
             }
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
         return myLocation;
     }

@@ -39,6 +39,7 @@ public class SlateActivity extends BaseActivity implements LocationHelper {
     RadarAnimationView radarAnimationView;
 
     private LocalUtils mLocal;
+    private long oldTime = -1;
 
 
     @Override
@@ -46,44 +47,20 @@ public class SlateActivity extends BaseActivity implements LocationHelper {
         setSupportActionBar(toolbar);
         ActionBarManager.initBackTitle(getSupportActionBar());
         title.setText("GPS状态");
-
-        radarAnimationView.setCounterTextSizeDp(40);
-        radarAnimationView.setNumberOfItemsToDiscover(5);
+        oldTime = System.currentTimeMillis();
         RxPermissions rxPermissions = new RxPermissions(this);
 
         rxPermissions
-                .request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .request(Manifest.permission.ACCESS_FINE_LOCATION)
                 .subscribe(granted -> {
                     if (granted) {
                         mLocal = LocalUtils.newCreate();
                         mLocal.configuration(this);
+                        mLocal.initLocationListener(this, 5);
                     } else {
                         Toast.makeText(mContext, "权限不允许获取GPS信息", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-        radarAnimationView.beginAnimation(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-
     }
 
     @Override
@@ -103,7 +80,13 @@ public class SlateActivity extends BaseActivity implements LocationHelper {
 
     @Override
     public void updateGPSStatus(int event, GpsStatus pGpsStatus) {
+        long newTime = System.currentTimeMillis();
+        if (newTime - oldTime <= 5000) {
+            return;
+        }
+        oldTime = newTime;
         int mGpsSatellite = mLocal.getGpsSatellite(pGpsStatus);
+        LoggerUtils.d("Localutils", mGpsSatellite + "卫星数量");
         SynopsisObj.getAppContext().setGpsSatellite(mGpsSatellite);
         switch (event) {
             case GpsStatus.GPS_EVENT_FIRST_FIX:
@@ -115,16 +98,35 @@ public class SlateActivity extends BaseActivity implements LocationHelper {
                 //周期的报告卫星状态
                 //得到所有收到的卫星的信息，包括 卫星的高度角、方位角、信噪比、和伪随机号（及卫星编号）
                 if (mGpsSatellite < 3) {
-                    LoggerUtils.d("Localutils", "***卫星少于3颗***");
-
                     tv_status.setText("GPS信号强度:差");
                     tv_count.setText("可用卫星:" + mGpsSatellite);
                 } else if (mGpsSatellite > 7) {
-                    LoggerUtils.d("Localutils", "***卫星大于7颗***");
                     tv_status.setText("GPS信号强度:良好");
                     tv_count.setText("可用卫星:" + mGpsSatellite);
                 }
+
+                radarAnimationView.setCounterTextSizeDp(40);
                 radarAnimationView.setNumberOfItemsToDiscover(mGpsSatellite);
+                radarAnimationView.beginAnimation(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
                 break;
             case GpsStatus.GPS_EVENT_STARTED: {
                 LoggerUtils.d("Localutils", "GPS start Event");
@@ -137,5 +139,11 @@ public class SlateActivity extends BaseActivity implements LocationHelper {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mLocal.removeLocationListener();
+        super.onDestroy();
     }
 }

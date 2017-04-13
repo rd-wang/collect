@@ -8,6 +8,7 @@ public class Const {
     public static final String SHOW_ATTR_TYPE = "type";
     public static final String SHOW_ATTR_DATA_POINT = "Location";
     public static final String SHOW_ATTR_DATA_POINT_LIST = "LocationList";
+    public static final String CURRENT_BGMAP_TYPE = "currentBgMapType";
     /**
      * 地图上划线的类型。
      */
@@ -26,5 +27,10 @@ public class Const {
     public interface LineType {
         int OLDLINE = 0;
         int NEWLINE = 1;
+    }
+
+    public interface BgMapType{
+        int offline = 0;
+        int online = 1;
     }
 }

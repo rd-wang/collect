@@ -14,14 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.master.R;
-import com.master.app.Constants;
 import com.master.app.SynopsisObj;
 import com.master.app.tools.CheckSeriesNoUtils;
 import com.master.app.tools.ClipboardUtils;
 import com.master.app.tools.CommonUtils;
 import com.master.app.tools.LoggerUtils;
 import com.master.app.tools.ObjectUtils;
-import com.master.app.tools.PreferencesUtils;
 import com.master.app.tools.StringUtils;
 import com.master.app.tools.ToastUtils;
 import com.master.contract.BaseActivity;
@@ -63,9 +61,6 @@ public class LoginActivity extends BaseActivity {
 //        ivCopy.setOnClickListener(v -> {
 //            copyMsgStr(this, tvCaptcha.getText().toString());
 //        });
-        if (PreferencesUtils.getBoolean(this, Constants.SC_WAKE_LOCK, false)) {
-            CommonUtils.toggleWalkLook(this, true);
-        }
         deviceIMEI = getDeviceIMEI(this);
         evImei.setText(deviceIMEI);
 
@@ -81,7 +76,7 @@ public class LoginActivity extends BaseActivity {
                     ToastUtils.showToast("请输入单位名称");
                     return;
                 }
-                String msg = "标识码:" + deviceIMEI + "\n" + "单位名称:" + dwmc + "\n"+"用于APP注册";
+                String msg = "标识码:" + deviceIMEI + "\n" + "单位名称:" + dwmc + "\n" + "用于APP注册";
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData mClipData = ClipData.newPlainText("Label", msg);
                 // 将ClipData内容放到系统剪贴板里。
@@ -91,7 +86,7 @@ public class LoginActivity extends BaseActivity {
             case R.id.btn_submit:
                 String trim = seriesNo.getText().toString().trim();
                 dwmc = dwName.getText().toString().trim();
-                if (TextUtils.isEmpty(dwmc)||CheckSeriesNoUtils.checkSeriesNo(dwmc, deviceIMEI, trim)) {
+                if (TextUtils.isEmpty(dwmc) || CheckSeriesNoUtils.checkSeriesNo(dwmc, deviceIMEI, trim)) {
                     startMainView();
                 } else {
                     Toast.makeText(SynopsisObj.getAppContext(), "请输入合法验证码", Toast.LENGTH_SHORT).show();

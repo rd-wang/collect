@@ -1,21 +1,22 @@
 package com.master.ui.activity;
 
-import com.master.R;
-import com.master.app.manager.FieldWordsDirs;
-import com.master.app.SynopsisObj;
-import com.master.app.tools.ActionBarManager;
-import com.master.app.tools.ContextUtils;
-import com.master.app.tools.LoggerUtils;
-import com.master.app.weight.SearchListView;
-import com.master.bean.Envelope;
-import com.master.contract.BaseActivity;
-
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.master.R;
+import com.master.app.SynopsisObj;
+import com.master.app.manager.FieldWordsDirs;
+import com.master.app.tools.ActionBarManager;
+import com.master.app.tools.ContextUtils;
+import com.master.app.tools.LoggerUtils;
+import com.master.app.weight.SearchListView;
+import com.master.bean.Envelope;
+import com.master.bean.Fields;
+import com.master.contract.BaseActivity;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -108,8 +109,13 @@ public class GatherDetailActivity extends BaseActivity {
             }
             viewHolder = (ViewHolder) convertView.getTag();
             LoggerUtils.d(sClassName, keyList.get(position));
-            viewHolder.tvZbmc
-                .setText(FieldWordsDirs.get().fieldsFormFName(keyList.get(position)).getFNameCHS());
+            Fields fields = FieldWordsDirs.get().fieldsFormFName(keyList.get(position));
+            if(fields !=null){
+                viewHolder.tvZbmc.setText(fields.getFNameCHS());
+            }else{
+                viewHolder.tvZbmc.setText(keyList.get(position));
+            }
+
             viewHolder.tvZbz.setText(data.get(keyList.get(position)));
             return convertView;
         }

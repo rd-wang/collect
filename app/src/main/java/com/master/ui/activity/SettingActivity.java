@@ -18,6 +18,8 @@ import com.master.contract.BaseActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.master.app.Constants.OUT_COLLECTION_AUTO_SAVE;
+import static com.master.app.Constants.OUT_COLLECTION_AUTO_SAVE_POINT_NUMBER;
 import static com.master.app.Constants.OUT_COLLECTION_CAR;
 import static com.master.app.Constants.OUT_COLLECTION_KIND;
 import static com.master.app.Constants.OUT_COLLECTION_SPACE;
@@ -54,6 +56,12 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.et_speed)
     AppCompatEditText etSpeed;
 
+    @BindView(R.id.sc_autosave)
+    SwitchCompat scAutoSave;
+
+    @BindView(R.id.et_autosave)
+    AppCompatEditText etAutosave;
+
 
     @Override
     public void bindView(Bundle savedInstanceState) {
@@ -62,25 +70,33 @@ public class SettingActivity extends BaseActivity {
         title.setText("采集设置");
 
         boolean speed_switch = PreferencesUtils.getBoolean(this, OUT_COLLECTION_SWICTH, false);
-        if (speed_switch){
+        if (speed_switch) {
             etSpeed.setEnabled(true);
             scSpeed.setChecked(true);
         }
 
+        boolean auto_save = PreferencesUtils.getBoolean(this, OUT_COLLECTION_AUTO_SAVE, false);
+        if (auto_save) {
+            etAutosave.setEnabled(true);
+            scAutoSave.setChecked(true);
+        }
+
 
         String collection_model = PreferencesUtils.getString(this, OUT_COLLECTION_KIND, default_null_tag);
-        if (collection_model.equals(OUT_COLLECTION_TIME)){
+        if (collection_model.equals(OUT_COLLECTION_TIME)) {
             scTimeInterval.setChecked(true);
 
-        }else if (collection_model.equals(OUT_COLLECTION_SPACE)){
+        } else if (collection_model.equals(OUT_COLLECTION_SPACE)) {
             swSpaceInterval.setChecked(true);
         }
         int anInt1 = PreferencesUtils.getInt(this, OUT_COLLECTION_TIME, 5);
         int anInt2 = PreferencesUtils.getInt(this, OUT_COLLECTION_SPACE, 100);
         int anInt = PreferencesUtils.getInt(this, OUT_COLLECTION_CAR, 10);
+        int anInt3 = PreferencesUtils.getInt(this, OUT_COLLECTION_AUTO_SAVE_POINT_NUMBER, 50);
         etTimeInterval.setText(String.valueOf(anInt1));
         etSpaceInterval.setText(String.valueOf(anInt2));
         etSpeed.setText(String.valueOf(anInt));
+        etAutosave.setText(String.valueOf(anInt3));
     }
 
     @Override
@@ -97,13 +113,15 @@ public class SettingActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (R.id.save==itemId){
+        if (R.id.save == itemId) {
             String space = etSpaceInterval.getText().toString();
             String time = etTimeInterval.getText().toString();
             String speed = etSpeed.getText().toString();
-            PreferencesUtils.putInt(this,OUT_COLLECTION_TIME,Integer.parseInt(time));
-            PreferencesUtils.putInt(this,OUT_COLLECTION_SPACE,Integer.parseInt(space));
-            PreferencesUtils.putInt(this,OUT_COLLECTION_CAR,Integer.parseInt(speed));
+            String points = etAutosave.getText().toString();
+            PreferencesUtils.putInt(this, OUT_COLLECTION_TIME, Integer.parseInt(time));
+            PreferencesUtils.putInt(this, OUT_COLLECTION_SPACE, Integer.parseInt(space));
+            PreferencesUtils.putInt(this, OUT_COLLECTION_CAR, Integer.parseInt(speed));
+            PreferencesUtils.putInt(this, OUT_COLLECTION_AUTO_SAVE_POINT_NUMBER, Integer.parseInt(points));
             super.hideSoftKeyboard();
             ToastUtils.showToast("保存设置成功");
         }
@@ -111,41 +129,50 @@ public class SettingActivity extends BaseActivity {
     }
 
     @OnClick({R.id.sc_timeInterval, R.id.et_timeInterval, R.id.sw_spaceInterval,
-        R.id.et_spaceInterval, R.id.sc_speed, R.id.et_speed})
+            R.id.et_spaceInterval, R.id.sc_speed, R.id.et_speed, R.id.sc_autosave})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sc_timeInterval:
-                if (scTimeInterval.isChecked()){
+                if (scTimeInterval.isChecked()) {
                     PreferencesUtils.putString(this, OUT_COLLECTION_KIND,
-                        OUT_COLLECTION_TIME);
+                            OUT_COLLECTION_TIME);
                     etTimeInterval.setEnabled(true);
                     etSpaceInterval.setEnabled(false);
                     swSpaceInterval.setChecked(false);
 
-                }else {
+                } else {
                     PreferencesUtils.putString(this, OUT_COLLECTION_KIND, default_null_tag);
                     etTimeInterval.setEnabled(false);
                 }
                 break;
             case R.id.sw_spaceInterval:
-                if (swSpaceInterval.isChecked()){
+                if (swSpaceInterval.isChecked()) {
                     PreferencesUtils.putString(this, OUT_COLLECTION_KIND,
-                        OUT_COLLECTION_SPACE);
+                            OUT_COLLECTION_SPACE);
                     etSpaceInterval.setEnabled(true);
                     etTimeInterval.setEnabled(false);
                     scTimeInterval.setChecked(false);
-                }else {
+                } else {
                     PreferencesUtils.putString(this, OUT_COLLECTION_KIND, default_null_tag);
                     etTimeInterval.setEnabled(false);
                 }
                 break;
             case R.id.sc_speed:
-                if (scSpeed.isChecked()){
-                    PreferencesUtils.putBoolean(this, OUT_COLLECTION_SWICTH,true);
+                if (scSpeed.isChecked()) {
+                    PreferencesUtils.putBoolean(this, OUT_COLLECTION_SWICTH, true);
                     etSpeed.setEnabled(true);
-                }else {
-                    PreferencesUtils.putBoolean(this, OUT_COLLECTION_SWICTH,false);
+                } else {
+                    PreferencesUtils.putBoolean(this, OUT_COLLECTION_SWICTH, false);
                     etSpeed.setEnabled(false);
+                }
+                break;
+            case R.id.sc_autosave:
+                if (scAutoSave.isChecked()) {
+                    PreferencesUtils.putBoolean(this, OUT_COLLECTION_AUTO_SAVE, true);
+                    etAutosave.setEnabled(true);
+                } else {
+                    PreferencesUtils.putBoolean(this, OUT_COLLECTION_AUTO_SAVE, false);
+                    etAutosave.setEnabled(false);
                 }
                 break;
 

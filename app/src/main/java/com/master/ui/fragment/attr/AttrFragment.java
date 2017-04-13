@@ -1,10 +1,18 @@
 package com.master.ui.fragment.attr;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+
 import com.esri.core.geodatabase.Geodatabase;
 import com.esri.core.geodatabase.GeodatabaseFeatureTable;
 import com.master.R;
 import com.master.app.RestricMsg;
 import com.master.app.manager.AcquisitionPara;
+import com.master.app.orm.DbHelperDbHelper;
 import com.master.app.tools.CommonUtils;
 import com.master.app.weight.CustomTextView;
 import com.master.app.weight.SearchListView;
@@ -13,13 +21,6 @@ import com.master.contract.BaseFragment;
 import com.master.ui.activity.PropertyListActivity;
 import com.master.ui.adapter.DatabaseInfoAdapter;
 import com.master.ui.adapter.MapLayerInfoAdapter;
-
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -58,11 +59,16 @@ public class AttrFragment extends BaseFragment {
 
     @Override
     public void bindView(Bundle savedInstanceState) {
-        toggleColor(true);
+        toggleColor(false);
         toolbar_att.setNavigationIcon(null);
         List<Table> tempDate = new ArrayList<>();
         List<Table> lineList = AcquisitionPara.getLineList();
         List<Table> pointList = AcquisitionPara.getPointList();
+        Table table = new Table();
+        table.setLayerType("23");
+        table.setTName(DbHelperDbHelper.LX_TABLE);
+        table.setTNameCHS("路线");
+        tempDate.add(table);
         tempDate.addAll(lineList);
         tempDate.addAll(pointList);
         DatabaseInfoAdapter myAdapterWk = new DatabaseInfoAdapter(mContext, tempDate);

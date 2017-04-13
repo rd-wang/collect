@@ -1,18 +1,18 @@
 package com.master.ui.adapter;
 
-import com.master.R;
-import com.master.app.SynopsisObj;
-import com.master.app.tools.CommonUtils;
-import com.master.bean.Table;
-import com.master.ui.activity.MainActivity;
-import com.master.ui.activity.WorkParamListActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.master.R;
+import com.master.app.SynopsisObj;
+import com.master.app.tools.CommonUtils;
+import com.master.bean.Table;
+import com.master.ui.activity.MainActivity;
+import com.master.ui.activity.WorkParamListActivity;
 
 import java.util.List;
 
@@ -49,8 +49,7 @@ public class DatabaseInfoAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        View convertView = View
-            .inflate(SynopsisObj.getAppContext(), R.layout.att_layer_list_item, null);
+        View convertView = View.inflate(SynopsisObj.getAppContext(), R.layout.att_layer_list_item, null);
         TextView tvlayername = (TextView) convertView.findViewById(R.id.tvlayername);
         tvlayername.setText(data.get(i).getTNameCHS());
         convertView.setOnClickListener(v -> {

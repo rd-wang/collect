@@ -64,17 +64,20 @@ public class LableGradView extends GridView {
         }
         this.context = context;
         if (datasId == R.array.m_line_label) {
-            // TODO: 2017/3/2  上面两个选项是写死的跟配置文件没关系，存储的还是一样的类型所以copy一份即可
+            // 上面两个选项是写死的跟配置文件没关系，存储的还是一样的类型所以copy一份即可
             // 伪造数据
             List<Table> lineList = AcquisitionPara.getLineList();
+            List<Table> lineList2 = new ArrayList<>();
             if (DataUtils.isNotEmpty(lineList)) {
                 Table lxTable = lineList.get(0);
-                lxTable.setTNameCHS("新路线");
-                Table copy = lxTable.copy();
-                copy.setTNameCHS("续采集");
-                lineList.add(copy);
+                Table copy1 = lxTable.copy();
+                copy1.setTNameCHS("新路线");
+                Table copy2 = lxTable.copy();
+                copy2.setTNameCHS("续采集");
+                lineList2.add(copy1);
+                lineList2.add(copy2);
             }
-            dataList = lineList;
+            dataList = lineList2;
         } else {
             dataList = AcquisitionPara.getPointList();
         }
@@ -131,6 +134,7 @@ public class LableGradView extends GridView {
                                         Const.LineType.NEWLINE : Const.LineType.OLDLINE);
                         intent.putExtras(b);
                         MainActivity.mtable = xlTable;
+                        LayerFragment.S_LayerFragment.hideSearchAndButton(true);
                         CommonUtils.toActivity(AppManager.getAppManager().currentActivity(), intent);
                     }
                     if (datasId == R.array.m_point_label) {

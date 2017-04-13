@@ -58,7 +58,7 @@ public class WorkParamListActivity extends BaseActivity implements OnSearchOpera
         this.title.setText(chsname);
         ActionBarManager.initBackTitle(getSupportActionBar());
         SearchBar searchBar = new SearchBar(this);
-        searchBar.setText("输入地图名称关键字");
+        searchBar.setText("输入查询关键字");
         mListView.addHeaderView(searchBar);
         mListView.pullRefreshEnable(false);
         View head = ContextUtils.inflate(R.layout.list_item_2);
@@ -91,15 +91,12 @@ public class WorkParamListActivity extends BaseActivity implements OnSearchOpera
                 HashMap<String, String> map = new HashMap();
                 for (int i = 0; i < columnNames.length; i++) {
                     if (i == 0 && StringUtils.endsWithIgnoreCase(columnNames[i], "BM")) {
-                        String columnstring = cursor
-                                .getString(cursor.getColumnIndex(columnNames[i]));
-
+                        String columnstring = cursor.getString(cursor.getColumnIndex(columnNames[i]));
                         //手动保存编码信息
                         map.put("def_TBM", columnstring);
                         map.put("def_TBMLM", columnNames[i]);
                     } else {
-                        String columnstring = cursor
-                                .getString(cursor.getColumnIndex(columnNames[i]));
+                        String columnstring = cursor.getString(cursor.getColumnIndex(columnNames[i]));
                         map.put(columnNames[i], columnstring);
                     }
                 }

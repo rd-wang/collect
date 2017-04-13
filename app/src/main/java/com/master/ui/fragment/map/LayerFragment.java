@@ -22,7 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 
@@ -60,6 +59,7 @@ import com.master.app.orm.DbHelperDbHelper;
 import com.master.app.tools.CommonUtils;
 import com.master.app.tools.LoggerUtils;
 import com.master.app.tools.ToastUtils;
+import com.master.app.weight.SearchListView;
 import com.master.bean.LdData;
 import com.master.bean.LocaDate;
 import com.master.constant.Const;
@@ -108,8 +108,14 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
     @BindView(R.id.search_btn)
     ImageView searchBtn;
 
+    @BindView(R.id.search_layout)
+    LinearLayout mSearchLayout;
+
     @BindView(R.id.search_result_layout)
     LinearLayout mSearchResultLayout;
+
+    @BindView(R.id.buttons_layout)
+    LinearLayout mButtonsLayout;
 
     @BindView(R.id.search_result_list)
     RecyclerView mSearchResultList;
@@ -167,6 +173,8 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
     private SearchResultAdapter searchResultAdapter;
     private List<LdData> searchLxList;
 
+    public int CURRENT_BGMAP_TYPE = Const.BgMapType.online;
+
     @Override
     protected LayerPresenter createPresenter() {
         return new LayerPresenter(new LayerModel());
@@ -213,7 +221,7 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         //初始化搜索框
         String[] mSearchSource = getResources().getStringArray(R.array.search_source);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), R.layout.spinner_textview, mSearchSource);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_drop_down_textview);
         searchMenu.setAdapter(adapter);
         searchMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -371,9 +379,10 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
      */
     private void onCreatePopupWindow(ArrayList data) {
         View listLayout = View.inflate(getActivity(), R.layout.attribute_list_activity, null);
-        ListView listView = (ListView) listLayout.findViewById(R.id.listview);
+        SearchListView listView = (SearchListView) listLayout.findViewById(R.id.listview);
         ImageView back = (ImageView) listLayout.findViewById(R.id.hide_popupWindow);
         AttributeListAdapter myAdapter = new AttributeListAdapter(mContext, data);
+        listView.setEnableRefresh(false);
         listView.setAdapter(myAdapter);
         WindowManager windowManager = (WindowManager) mContext
                 .getSystemService(Context.WINDOW_SERVICE);
@@ -384,7 +393,7 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(popupWindow!=null&&popupWindow.isShowing()){
+                if (popupWindow != null && popupWindow.isShowing()) {
                     popupWindow.dismiss();
                 }
             }
@@ -396,6 +405,18 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.showAsDropDown(mMapView, 0, -height);
+    }
+
+    public void hideSearchAndButton(boolean hide) {
+        if (hide) {
+            mSearchLayout.setVisibility(View.GONE);
+            mSearchResultLayout.setVisibility(View.GONE);
+            mButtonsLayout.setVisibility(View.GONE);
+        } else {
+            mSearchLayout.setVisibility(View.VISIBLE);
+            mSearchResultLayout.setVisibility(View.VISIBLE);
+            mButtonsLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     class MyTouchListener extends MapOnTouchListener {
@@ -506,9 +527,11 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
                 break;
             case "gl":
                 loadMap_gl(filename);
+                CURRENT_BGMAP_TYPE = Const.BgMapType.offline;
                 break;
             case "online":
                 loadMap_online(filename, servertype);
+                CURRENT_BGMAP_TYPE = Const.BgMapType.online;
                 break;
         }
     }
@@ -810,7 +833,7 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
         mMapView.setScale(50000);//设置地图比例尺
         LocationDisplayManager ls = mMapView.getLocationDisplayManager();
         ls.start();//启动
-        LoggerUtils.d("zuobiao", ls.getLocation().toString());
+        LoggerUtils.d("zuobiao", ls.getLocation() == null ? "ls.getLocation()=null" : ls.getLocation().toString());
         ls.setAutoPanMode(LocationDisplayManager.AutoPanMode.LOCATION);//自动滑动至位置
     }
 
@@ -819,15 +842,23 @@ public class LayerFragment extends MvpFragment<LayerPresenter> implements LayerV
 
         switch (view.getId()) {
             case R.id.image_tuceng:
-                toLayersManager();
+                if (Const.BgMapType.offline == CURRENT_BGMAP_TYPE) {
+                    toLayersManager();
+                } else {
+                    ToastUtils.showToast("没有路网背景地图");
+                }
                 break;
             case R.id.image_identify:
-                mGraphicsLayermeasure.removeAll();
-                myListener.setType("");
-                if (ifidentify) {
-                    ifidentify = false;
+                if (Const.BgMapType.offline == CURRENT_BGMAP_TYPE) {
+                    mGraphicsLayermeasure.removeAll();
+                    myListener.setType("");
+                    if (ifidentify) {
+                        ifidentify = false;
+                    } else {
+                        ifidentify = true;
+                    }
                 } else {
-                    ifidentify = true;
+                    ToastUtils.showToast("没有路网背景地图");
                 }
                 break;
             case R.id.image_measure:

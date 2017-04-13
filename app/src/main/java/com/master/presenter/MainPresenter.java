@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.master.app.orm.DbHelperDbHelper.LX_LXBM;
 import static com.master.ui.activity.MainActivity.S_MainActivity;
 import static com.master.ui.activity.MainActivity.mtable;
 
@@ -128,7 +129,7 @@ public class MainPresenter extends MvpPresenter<MainView, MainModel> {
                         return isSucceed;
                     }
                     //保存线  线保存时不知道是哪个路段 所以经纬度表中 外键为路线
-                    if (DbHelperDbHelper.open().addPointList(dataList, currentJwdName, map.get("SSLX"))) {
+                    if (DbHelperDbHelper.open().addPointList(dataList, currentJwdName, map.get(LX_LXBM))) {
                         getView().showToast("采集成功");
                         isSucceed = true;
                     }

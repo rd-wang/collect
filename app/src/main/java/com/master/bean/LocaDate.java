@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @mail llsmpsvn@gmail.com
  * @date on 2017/1/11
  */
-public class LocaDate implements Serializable{
+public class LocaDate implements Serializable {
 
     public double speed;//速度
 
@@ -23,12 +23,15 @@ public class LocaDate implements Serializable{
 
     public long time;//时间
 
+    public double altitude;//高度
+
     public boolean isworn = true;//是否有效
 
     private LocaDate(Builder builder) {
         this.speed = builder.speed;
         this.lat = builder.lat;
         this.lng = builder.lng;
+        this.altitude = builder.altitude;
         this.time = builder.time;
         this.isworn = builder.isworn;
     }
@@ -36,12 +39,13 @@ public class LocaDate implements Serializable{
     @Override
     public String toString() {
         return "locaDate{" +
-            "isworn=" + isworn +
-            ", speed=" + speed +
-            ", lat=" + lat +
-            ", lng=" + lng +
-            ", time=" + time +
-            '}';
+                "isworn=" + isworn +
+                ", speed=" + speed +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", altitude=" + altitude +
+                ", time=" + time +
+                '}';
     }
 
 
@@ -54,6 +58,8 @@ public class LocaDate implements Serializable{
         private double lng;//经度
 
         private long time;//时间
+
+        private double altitude; //高度
 
         private boolean isworn = true;//是否损坏
 
@@ -69,6 +75,7 @@ public class LocaDate implements Serializable{
                 this.lng = loc.getLongitude();
                 this.time = loc.getTime();
                 this.speed = loc.getSpeed();
+                this.altitude = loc.getAltitude();
                 this.isworn = false;
                 return this;
             } else {

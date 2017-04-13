@@ -3,12 +3,12 @@ package com.master.ui.activity.map;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.master.R;
 import com.master.app.tools.ActionBarManager;
 import com.master.app.tools.FileUtils;
+import com.master.app.tools.LoggerUtils;
 import com.master.app.tools.ToastUtils;
 import com.master.app.weight.SearchListView;
 import com.master.contract.BaseActivity;
@@ -105,7 +105,7 @@ public class UncapMapActivity extends BaseActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Log.d("loadMap end ", "loadMap end");
+            LoggerUtils.d("loadMap end ", "loadMap end");
             S_MainActivity.changetabs(0);
             this.finish();
 

@@ -1,13 +1,13 @@
 package com.master.app.tools;
 
-import com.master.R;
-import com.master.app.inter.CallBack;
-
 import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.master.R;
+import com.master.app.inter.CallBack;
 
 /**
  * <p>Title:${type_inName}<p/>
@@ -33,6 +33,7 @@ public class DialogUtils {
         Button cancel = (Button) view.findViewById(R.id.cancel);
         title.setText(builder.title);
         msg.setText(builder.msg);
+        mSubmit.setText(builder.submitText);
         cancel.setText(builder.cancel);
         AlertDialog.Builder dlg = new AlertDialog.Builder(c);
         dlg.setView(view);
